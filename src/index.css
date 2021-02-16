@@ -1,0 +1,56 @@
+.division {
+  float: none;
+  margin: 0 auto 18px;
+  overflow: hidden;
+  position: relative;
+  text-align: center;
+  width: 100%;
+}
+
+.division .line {
+  border-top: 1px solid #c0c0c0;
+  position: absolute;
+  top: 10px;
+  width: 34%;
+}
+
+.division .line.l {
+  left: 0;
+}
+
+.division .line.r {
+  right: 0;
+}
+
+.form-login hr {
+  width: 40%;
+  margin: auto;
+  margin-bottom: 20px;
+}
+
+.table {
+  color: #fff;
+}
+
+.table a {
+  color: #fff;
+}
+
+
+.my-table>tbody>tr {
+  border-style: hidden;
+  border-top: 0px;
+  font-size: 15px;
+}
+
+.bottom-description {
+  width: 100%;
+  color: white;
+  font-style: italic;
+}
+
+.my-table-content {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+}
