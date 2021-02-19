@@ -1,23 +1,38 @@
-import React from "react";
-import { Button, Layout } from "antd";
+import React, { useState, useEffect } from "react";
+import { Layout } from "antd";
 import { Route } from "react-router-dom";
 import backgroundLogin from "./../assets/images/background-login.jpg";
 
-const { Header, Footer, Sider, Content } = Layout;
+const { Sider } = Layout;
 
 export const LoginTemplate = (props) => {
+
+  const [size, setSize] = useState({
+      width: window.innerWidth,
+      height: window.innerHeight
+  });
+
+  useEffect(() => {
+    window.onresize = () => {
+      setSize({
+        width: window.innerWidth,
+        height: window.innerHeight
+      })
+    };
+  }, []);
+
   let { LoginComponent, SiderTableContentComponent, ...restRoute } = props;
   return <Route { ...restRoute } render={(propsRoute) => {
     return <>
       <Layout>
-        <Sider width={window.innerWidth/2} style={{
-            height: window.innerHeight,            
+        <Sider width={size.width/2} style={{
+            height: size.height, 
             backgroundImage: `url('${backgroundLogin}')`
           }}>
           <SiderTableContentComponent/>
         </Sider>        
         <Layout>
-          <LoginComponent/>
+          <LoginComponent { ...propsRoute }/>
         </Layout>
       </Layout>
     </>
