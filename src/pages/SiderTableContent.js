@@ -2,7 +2,7 @@ import React from 'react'
 
 export default function SiderTableContent() {
   return (
-    <div className="my-table-content">
+    <div className="table-content-author">
       <div className="row justify-content-center align-items-center">
         <table className="table my-table w-50">
           <tbody>

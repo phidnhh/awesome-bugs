@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { Spin } from 'antd';
 
 
-export default function LoadingComponent() {
+export default function Loading() {
     const { isLoading } = useSelector(state => state.LoadingReducer);
     if(isLoading) {
         return (
