@@ -6,7 +6,7 @@ import Info from '../components/main/Info'
 export default function indexAwesomeBugs() {
   return (
     <div className="main">
-      <Header/>
+      <Header breadcrumb={ ["Awesome Bugs 1.0", "Awesome Board"] } />
       <Info/>
       <Content/>
     </div>

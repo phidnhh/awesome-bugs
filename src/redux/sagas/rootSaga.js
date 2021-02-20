@@ -1,8 +1,11 @@
 import { all } from "redux-saga/effects";
-import * as AwesomeBugs from "./UserSaga";
+import * as User from "./UserSaga";
+import * as Project from "./ProjectSaga";
 
 export function * rootSaga() {
     yield all([
-      AwesomeBugs.watchSigninSaga()
+      User.watchSigninSaga(),
+      Project.watchProjectCategorySaga(),
+      Project.watchCreateProjectSaga(),
     ]);
 }

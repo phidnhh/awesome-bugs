@@ -1,4 +1,5 @@
 import React from 'react'
+import { NavLink } from 'react-router-dom';
 import avatarLogo from "./../assets/avatar/avatar-logo.png";
 
 export default function Menu() {
@@ -14,36 +15,36 @@ export default function Menu() {
         </div>
       </div>
       <div className="control">
-        <div>
+        <NavLink to="/awesomebugs" className="awesomebugs-menu-item" activeClassName="activeNavlink">
           <i className="fa fa-credit-card" />
-          <span>Cyber Board</span>
-        </div>
-        <div>
+          <span>Awesome Board</span>
+        </NavLink>
+        <NavLink to="/createproject" className="awesomebugs-menu-item" activeClassName="activeNavlink">
           <i className="fa fa-cog" />
-          <span>Project Settings</span>
-        </div>
+          <span>Create Project</span>
+        </NavLink>
       </div>
       <div className="feature">
-        <div>
+        <NavLink to="/Releases" className="awesomebugs-menu-item" activeClassName="activeNavlink">
           <i className="fa fa-truck" />
           <span>Releases</span>
-        </div>
-        <div>
+        </NavLink>
+        <NavLink to="/Issuesandfilters" className="awesomebugs-menu-item" activeClassName="activeNavlink">
           <i className="fa fa-equals" />
           <span>Issues and filters</span>
-        </div>
-        <div>
+        </NavLink>
+        <NavLink to="/Pages" className="awesomebugs-menu-item" activeClassName="activeNavlink">
           <i className="fa fa-paste" />
           <span>Pages</span>
-        </div>
-        <div>
+        </NavLink>
+        <NavLink to="/Reports" className="awesomebugs-menu-item" activeClassName="activeNavlink">
           <i className="fa fa-location-arrow" />
           <span>Reports</span>
-        </div>
-        <div>
+        </NavLink>
+        <NavLink to="/Components" className="awesomebugs-menu-item" activeClassName="activeNavlink">
           <i className="fa fa-box" />
           <span>Components</span>
-        </div>
+        </NavLink>
       </div>
     </div>
   )

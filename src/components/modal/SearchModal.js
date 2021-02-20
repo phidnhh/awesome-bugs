@@ -21,7 +21,7 @@ export default function SearchModal() {
                 <i className="fa fa-bookmark" />
               </div>
               <div>
-                <p>cyberlearn</p>
+                <p>awesome</p>
                 <p>BUG-238066</p>
               </div>
             </div>

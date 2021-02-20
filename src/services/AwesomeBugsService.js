@@ -1,5 +1,5 @@
 import axios from "axios"
-import { DOMAIN_AWESOMEBUGS } from "../util/constants/settingSystem"
+import { ACCESS_TOKEN, DOMAIN_AWESOMEBUGS } from "../util/constants/settingSystem"
 
 export const awesomeBugsService = {
   signin: (userLogin) => {
@@ -8,5 +8,33 @@ export const awesomeBugsService = {
       method: "POST",
       data: userLogin
     });
-  }
+  },
+
+  getProjectCategory: () => {
+    return axios({
+      url: `${DOMAIN_AWESOMEBUGS}/ProjectCategory`,
+      method: "GET"
+    });
+  },
+
+  createProject: (newProject) => {
+    return axios({
+      url: `${DOMAIN_AWESOMEBUGS}/Project/createProject`,
+      method: "POST",
+      data: newProject
+    });
+  },
+
+  createProjectAuthorize: (newProject) => {
+    return axios({
+      url: `${DOMAIN_AWESOMEBUGS}/Project/createProjectAuthorize`,
+      method: "POST",
+      data: newProject,
+      headers: {
+        "Authorization": "Bearer " + localStorage.getItem(ACCESS_TOKEN)
+      }
+    });
+  },
+
+
 }

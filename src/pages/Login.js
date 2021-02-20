@@ -1,10 +1,9 @@
 import React from 'react'
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
-import { Input, Button, Form, Checkbox } from "antd";
+import { Input, Button, Form } from "antd";
 import { withFormik } from 'formik';
 import * as Yup from "yup";
 import { connect } from "react-redux";
-import { USER_SIGNIN_API } from '../redux/constants/AwesomeBugs';
 import { signinAction } from '../redux/actions/AwesomeBugsAction';
 
 function Login(props) {
@@ -15,7 +14,7 @@ function Login(props) {
     handleChange,
     handleBlur,
     handleSubmit,
-  } = props;  
+  } = props;
   return (
     <div className="container form-login">
       <div className="row d-flex justify-content-center align-items-center" style={{ height: window.innerHeight }}>
