@@ -6,7 +6,6 @@ import avatar3 from "./../../assets/avatar/avatar3.jfif";
 export default function Info() {
   return (
     <>
-      <h3>Cyber Board</h3>
       <div className="info" style={{display: 'flex'}}>
         <div className="search-block">
           <input className="search" />

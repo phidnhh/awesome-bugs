@@ -115,8 +115,8 @@ export default function InfoModal() {
                 <div className="col-4">
                   <div className="status">
                     <h6>STATUS</h6>
-                    <select className="custom-select">
-                      <option selected>SELECTED FOR DEVELOPMENT</option>
+                    <select defaultValue="-1" className="custom-select">
+                      <option value="-1">SELECTED FOR DEVELOPMENT</option>
                       <option value={1}>One</option>
                       <option value={2}>Two</option>
                       <option value={3}>Three</option>
@@ -153,8 +153,8 @@ export default function InfoModal() {
                   </div>
                   <div className="priority" style={{marginBottom: 20}}>
                     <h6>PRIORITY</h6>
-                    <select>
-                      <option>Highest</option>
+                    <select defaultValue="1">
+                      <option value="1">Highest</option>
                       <option>Medium</option>
                       <option>Low</option>
                       <option>Lowest</option>

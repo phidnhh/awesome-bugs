@@ -3,12 +3,15 @@ import createSagaMiddleware from 'redux-saga';
 import { rootSaga } from './sagas/rootSaga';
 import LoadingReducer from "./reducers/LoadingReducer";
 import UserReducer from "./reducers/UserReducer";
+import ProjectReducer from "./reducers/ProjectReducer";
 
 //setup saga
 const sagaMiddleware = createSagaMiddleware();
 const rootReducer = combineReducers({
     LoadingReducer,
-    UserReducer
+    UserReducer,
+    ProjectReducer
+
 });
 
 const store = createStore(
