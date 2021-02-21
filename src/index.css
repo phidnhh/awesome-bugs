@@ -12,7 +12,7 @@
   height: 100vh;
   display: flex;
   font-family: "Circular";
-  font-variant: none;
+  font-variant: none!important;
 }
 
 .division {
@@ -589,4 +589,24 @@ a.awesomebugs-menu-item.activeNavlink {
 
 .form-create-project .form-group {
   margin-bottom: 20px;
+}
+
+.table-project-management {
+  margin-top: 3%;
+  padding: 0 3%;
+}
+
+.table-project-management .ant-tag,
+.table-project-management .ant-table {
+  font-variant: none;
+}
+
+.table-project-management .html-description p{
+  margin-bottom: 0;
+}
+
+.table-project-management .action-icon {
+  cursor: pointer;
+  vertical-align: middle;
+  display: table-cell;
 }

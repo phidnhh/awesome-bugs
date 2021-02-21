@@ -36,5 +36,13 @@ export const awesomeBugsService = {
     });
   },
 
-
+  getProjectList: () => {
+    return axios({
+      url: `${DOMAIN_AWESOMEBUGS}/Project/getAllProject`,
+      method: "GET",
+      headers: {
+        "Authorization": "Bearer " + localStorage.getItem(ACCESS_TOKEN)
+      }
+    });
+  },
 }

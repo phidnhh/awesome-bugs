@@ -6,6 +6,7 @@ import Home from "./pages/Home";
 import indexAwesomeBugs from "./pages/indexAwesomeBugs";
 import Login from "./pages/Login";
 import PageNotFound from "./pages/PageNotFound";
+import ProjectManagement from "./pages/ProjectManagement";
 import SiderTableContent from "./pages/SiderTableContent";
 import { AwesomeBugsTemplate } from "./templates/AwesomeBugsTemplate";
 import { LoginTemplate } from "./templates/LoginTemplate";
@@ -17,6 +18,10 @@ export default function App() {
       <Router history={history}>
         <Loading/>
         <Switch>
+          <LoginTemplate exact path="/" 
+            LoginComponent={Login}
+            SiderTableContentComponent={SiderTableContent}
+          />
           <LoginTemplate exact path="/login" 
             LoginComponent={Login}
             SiderTableContentComponent={SiderTableContent}
@@ -24,6 +29,7 @@ export default function App() {
           <Route exact path="/home" component={Home} />
           <AwesomeBugsTemplate exact path="/awesomebugs" Component={indexAwesomeBugs}/>
           <AwesomeBugsTemplate exact path="/createproject" Component={CreateProject}/>
+          <AwesomeBugsTemplate exact path="/projectmanagement" Component={ProjectManagement}/>
           <Route path="*" component={PageNotFound} />
         </Switch>
       </Router>

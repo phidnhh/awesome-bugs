@@ -25,3 +25,6 @@ yarn-error.log*
 
 # resource
 /resource-awesome-bugs
+
+# bower
+/public/bower_components

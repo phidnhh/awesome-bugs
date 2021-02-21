@@ -19,8 +19,12 @@ export default function Menu() {
           <i className="fa fa-credit-card" />
           <span>Awesome Board</span>
         </NavLink>
-        <NavLink to="/createproject" className="awesomebugs-menu-item" activeClassName="activeNavlink">
+        <NavLink to="/projectmanagement" className="awesomebugs-menu-item" activeClassName="activeNavlink">
           <i className="fa fa-cog" />
+          <span>Project Management</span>
+        </NavLink>
+        <NavLink to="/createproject" className="awesomebugs-menu-item" activeClassName="activeNavlink">
+          <i className="fa fa-edit"></i>
           <span>Create Project</span>
         </NavLink>
       </div>
