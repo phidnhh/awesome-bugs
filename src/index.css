@@ -8,11 +8,14 @@
   font-style: normal;
 }
 
+* {
+  font-variant: none!important;
+}
+
 .jira {
   height: 100vh;
   display: flex;
   font-family: "Circular";
-  font-variant: none!important;
 }
 
 .division {
@@ -186,7 +189,6 @@
 .menu {
   height: 100vh;
   min-width: 18%;
-  margin-left: 4%;
   background-color: #f4f5f7;
 }
 
@@ -596,11 +598,6 @@ a.awesomebugs-menu-item.activeNavlink {
   padding: 0 3%;
 }
 
-.table-project-management .ant-tag,
-.table-project-management .ant-table {
-  font-variant: none;
-}
-
 .table-project-management .html-description p{
   margin-bottom: 0;
 }
@@ -609,4 +606,23 @@ a.awesomebugs-menu-item.activeNavlink {
   cursor: pointer;
   vertical-align: middle;
   display: table-cell;
+}
+
+.sider-sidebar {
+  height: 100%;
+}
+
+.sider-sidebar .fa {
+  font-size: 20px !important;
+}
+
+.sider-sidebar .logo {
+  height: 7%;
+  margin: 20% 0;
+  text-align: center;
+}
+
+.sider-sidebar .logo img {
+  height: 100%;
+  fill: white;
 }
