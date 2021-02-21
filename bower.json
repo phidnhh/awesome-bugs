@@ -1,0 +1,28 @@
+{
+  "name": "awesome-bugs",
+  "description": "Manage frontend libraries",
+  "main": "",
+  "authors": [
+    "Dang Nhat Phi <phidnuit@gmail.com>"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "phidndev"
+  ],
+  "homepage": "https://github.com/phidnhh/awesome-bugs",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "public/bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "5.0.0-beta2",
+    "alertifyjs": "^1.0.11",
+    "jquery": "^3.5.1",
+    "font-awesome": "^5.15.2"
+  }
+}

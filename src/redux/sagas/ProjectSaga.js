@@ -1,9 +1,8 @@
 import { call, delay, put, takeLatest } from "redux-saga/effects";
 import { awesomeBugsService } from "../../services/AwesomeBugsService";
 import { STATUS_CODE } from "../../util/constants/settingSystem";
-import { DISPLAY_LOADING, HIDE_LOADING } from "../constants/AwesomeBugs";
-
-import { GET_PROJECT_CATEGORY_API, SET_PROJECT_CATEGORY, CREATE_PROJECT_API } from "./../constants/AwesomeBugs";
+import { DISPLAY_LOADING, GET_PROJECT_LIST_API, HIDE_LOADING, SET_PROJECT_LIST, GET_PROJECT_CATEGORY_API, SET_PROJECT_CATEGORY, CREATE_PROJECT_API } from "../constants/AwesomeBugs";
+import history from "./../../util/history";
 
 // project category
 function * getProjectCategorySaga(action) {
@@ -16,7 +15,6 @@ function * getProjectCategorySaga(action) {
     const {data, status} = yield call(() => {
       return awesomeBugsService.getProjectCategory();
     });
-
 
     yield put({
       type: SET_PROJECT_CATEGORY,
@@ -50,7 +48,39 @@ function * createProjectSaga(action) {
     });
 
     if(status === STATUS_CODE.SUCCESS) {
-      console.log("~ data", data);
+      history.push("/projectmanagement");
+    }    
+
+  } catch (error) {
+    console.log("~ error", error.response.data);
+  }
+
+  yield put({
+    type: HIDE_LOADING
+  });
+}
+
+export function * watchCreateProjectSaga() {
+  yield takeLatest(CREATE_PROJECT_API, createProjectSaga);
+}
+
+// get projectlist
+function * getProjectListSaga(action) {
+  yield put({
+    type: DISPLAY_LOADING
+  });
+  yield delay(500);
+
+  try {
+    const {data, status} = yield call(() => {
+      return awesomeBugsService.getProjectList();
+    });
+
+    if(status === STATUS_CODE.SUCCESS) {
+      yield put({
+        type: SET_PROJECT_LIST,
+        projectList: data.content
+      });
     }
 
   } catch (error) {
@@ -63,6 +93,6 @@ function * createProjectSaga(action) {
 }
 
 
-export function * watchCreateProjectSaga() {
-  yield takeLatest(CREATE_PROJECT_API, createProjectSaga);
+export function * watchGetProjectListSaga() {
+  yield takeLatest(GET_PROJECT_LIST_API, getProjectListSaga);
 }

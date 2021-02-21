@@ -7,5 +7,6 @@ export function * rootSaga() {
       User.watchSigninSaga(),
       Project.watchProjectCategorySaga(),
       Project.watchCreateProjectSaga(),
+      Project.watchGetProjectListSaga(),
     ]);
 }

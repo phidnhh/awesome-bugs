@@ -26,7 +26,7 @@ function * signinSaga(action) {
     })
 
     // let history = yield select(state => state.HistoryReducer.history);
-    history.push("/home");
+    history.push("/awesomebugs");
 
   } catch (error) {
     console.log("~ error", error.response.data);
