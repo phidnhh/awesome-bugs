@@ -3,9 +3,10 @@ import { Table, Button, Space } from 'antd';
 import ReactHtmlParser from 'react-html-parser';
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector } from "react-redux";
-import { GET_PROJECT_CATEGORY_API, GET_PROJECT_LIST_API } from '../redux/constants/AwesomeBugs';
+import { GET_PROJECT_CATEGORY_API, GET_PROJECT_LIST_API, OPEN_FORM_EDIT_PROJECT } from '../redux/constants/AwesomeBugs';
 import { Tag, Divider } from 'antd';
 import _ from "lodash";
+import FormEditProject from '../components/form/FormEditProject';
 
 export default function ProjectManagement() {
   const {projectList, projectCategory} = useSelector(state => state.ProjectReducer);
@@ -68,7 +69,6 @@ export default function ProjectManagement() {
     });
   });
   creatorFilters = _.uniqWith(creatorFilters, _.isEqual);
-  console.log("~ creatorFilters", creatorFilters);
 
   let { sortedInfo, filteredInfo } = state;
   sortedInfo = sortedInfo || {};
@@ -113,11 +113,16 @@ export default function ProjectManagement() {
       key: 'action',
       render: (text, record) => (
         <Space size="middle">
-          <span className="action-icon"><EditOutlined/></span>
+          <span onClick={() => {
+            dispatch({
+              type: OPEN_FORM_EDIT_PROJECT,
+              Component: <FormEditProject/>,
+            })
+          }}className="action-icon"><EditOutlined/></span>
           <span className="action-icon"><DeleteOutlined/></span>
         </Space>
       ),
-    },    
+    },
   ];  
 
   return (
