@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react"
 import { Route, Router, Switch, useHistory } from "react-router-dom";
 import Loading from "./components/Loading";
+import Drawer from "./hocs/Drawer";
 import CreateProject from "./pages/CreateProject";
 import Home from "./pages/Home";
 import indexAwesomeBugs from "./pages/indexAwesomeBugs";
@@ -16,6 +17,7 @@ export default function App() {
   return (
     <>
       <Router history={history}>
+        <Drawer/>
         <Loading/>
         <Switch>
           <LoginTemplate exact path="/" 

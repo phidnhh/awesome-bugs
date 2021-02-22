@@ -4,14 +4,15 @@ import { rootSaga } from './sagas/rootSaga';
 import LoadingReducer from "./reducers/LoadingReducer";
 import UserReducer from "./reducers/UserReducer";
 import ProjectReducer from "./reducers/ProjectReducer";
+import DrawerReducer from "./reducers/DrawerReducer";
 
 //setup saga
 const sagaMiddleware = createSagaMiddleware();
 const rootReducer = combineReducers({
     LoadingReducer,
     UserReducer,
-    ProjectReducer
-
+    ProjectReducer,
+    DrawerReducer
 });
 
 const store = createStore(

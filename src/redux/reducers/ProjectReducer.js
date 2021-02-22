@@ -2,7 +2,14 @@ import { SET_PROJECT_CATEGORY, SET_PROJECT_LIST } from "../constants/AwesomeBugs
 
 const initialState = {
   projectCategory: [],
-  projectList: []
+  projectList: [],
+  projectEdit: {
+    id: 0,
+    projectName: "string",
+    creator: 0,
+    description: "string",
+    categoryId: 2    
+  }
 }
 
 export default (state = initialState, action) => {
