@@ -1,7 +1,7 @@
 import { call, delay, put, takeLatest } from "redux-saga/effects";
-import { awesomeBugsService } from "../../services/AwesomeBugsService";
+import { projectService } from "../../services/ProjectService";
 import { STATUS_CODE } from "../../util/constants/settingSystem";
-import { DISPLAY_LOADING, GET_PROJECT_LIST_API, HIDE_LOADING, SET_PROJECT_LIST, GET_PROJECT_CATEGORY_API, SET_PROJECT_CATEGORY, CREATE_PROJECT_API, UPDATE_PROJECT_API, CLOSE_DRAWER, DELETE_PROJECT_API } from "../constants/AwesomeBugs";
+import { DISPLAY_LOADING, GET_PROJECT_LIST_API, HIDE_LOADING, SET_PROJECT_LIST, GET_PROJECT_CATEGORY_API, SET_PROJECT_CATEGORY, CREATE_PROJECT_API, UPDATE_PROJECT_API, CLOSE_DRAWER, DELETE_PROJECT_API, ASSIGN_USER_PROJECT_API } from "../constants/AwesomeBugs";
 import history from "./../../util/history";
 import { notification } from 'antd';
 
@@ -14,7 +14,7 @@ function * getProjectCategorySaga(action) {
 
   try {
     const {data, status} = yield call(() => {
-      return awesomeBugsService.getProjectCategory();
+      return projectService.getProjectCategory();
     });
 
     yield put({
@@ -36,6 +36,7 @@ export function * watchProjectCategorySaga() {
   yield takeLatest(GET_PROJECT_CATEGORY_API, getProjectCategorySaga);
 }
 
+
 // Create project
 function * createProjectSaga(action) {
   yield put({
@@ -45,7 +46,7 @@ function * createProjectSaga(action) {
 
   try {
     const {data, status} = yield call(() => {
-      return awesomeBugsService.createProjectAuthorize(action.newProject);
+      return projectService.createProjectAuthorize(action.newProject);
     });
 
     if(status === STATUS_CODE.SUCCESS) {
@@ -80,7 +81,7 @@ function * getProjectListSaga(action) {
 
   try {
     const {data, status} = yield call(() => {
-      return awesomeBugsService.getProjectList();
+      return projectService.getProjectList();
     });
 
     if(status === STATUS_CODE.SUCCESS) {
@@ -99,10 +100,10 @@ function * getProjectListSaga(action) {
   });
 }
 
-
 export function * watchGetProjectListSaga() {
   yield takeLatest(GET_PROJECT_LIST_API, getProjectListSaga);
 }
+
 
 // Update project
 function * updateProjectSaga(action) {
@@ -113,7 +114,7 @@ function * updateProjectSaga(action) {
 
   try {
     const {data, status} = yield call(() => {
-      return awesomeBugsService.updateProject(action.projectUpdate);
+      return projectService.updateProject(action.projectUpdate);
     });
 
     if(status === STATUS_CODE.SUCCESS) {
@@ -150,7 +151,7 @@ function * deleteProjectSaga(action) {
 
   try {
     const {data, status} = yield call(() => {
-      return awesomeBugsService.deleteProject(action.projectId);
+      return projectService.deleteProject(action.projectId);
     });
 
     if(status === STATUS_CODE.SUCCESS) {
@@ -175,4 +176,40 @@ function * deleteProjectSaga(action) {
 
 export function * watchDeleteProjectSaga() {
   yield takeLatest(DELETE_PROJECT_API, deleteProjectSaga);
+}
+
+
+// Add user to members project
+function * assignUserProject(action) {
+  yield put({
+    type: DISPLAY_LOADING
+  });
+  yield delay(500);
+
+  try {
+    const {data, status} = yield call(() => {
+      return projectService.assignUserProject(action.userProject);
+    });
+
+    if(status === STATUS_CODE.SUCCESS) {
+      yield put({ type: GET_PROJECT_LIST_API });
+      notification["success"]({
+        message: "Add member to project successfully!"
+      });
+    }    
+
+  } catch (error) {
+    notification["error"]({
+      message: "Add member to project failed!"
+    });
+    console.log("~ error", error.response.data);
+  }
+
+  yield put({
+    type: HIDE_LOADING
+  });
+}
+
+export function * watchAssignUserProjectSaga() {
+  yield takeLatest(ASSIGN_USER_PROJECT_API, assignUserProject);
 }

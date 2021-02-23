@@ -620,3 +620,9 @@ a.awesomebugs-menu-item.activeNavlink {
   vertical-align: middle;
   display: table-cell;
 }
+
+.table-project-management .btn-add-member {
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+}
