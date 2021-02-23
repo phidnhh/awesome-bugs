@@ -1,6 +1,6 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom';
-import avatarLogo from "./../assets/avatar/avatar-logo.png";
+import avatarLogo from "./../../assets/avatar/avatar-logo.png";
 
 export default function Menu() {
   return (
