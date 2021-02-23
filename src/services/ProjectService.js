@@ -1,8 +1,6 @@
-import axios from "axios"
-import { ACCESS_TOKEN, DOMAIN_AWESOMEBUGS } from "../util/constants/settingSystem"
 import service from "./baseService";
 
-export const awesomeBugsService = {
+export const projectService = {
   signin: (userLogin) => {
     return service.post("Users/signin", userLogin);
   },
@@ -29,5 +27,9 @@ export const awesomeBugsService = {
 
   deleteProject: (id) => {
     return service.delete(`Project/deleteProject?projectId=${id}`);
+  },
+
+  assignUserProject: (userProject) => {
+    return service.post("Project/assignUserProject", userProject);
   }
 }

@@ -2,9 +2,11 @@
 export const DISPLAY_LOADING = "DISPLAY_LOADING";
 export const HIDE_LOADING = "HIDE_LOADING";
 
-// login constants
+// User constants
 export const USER_SIGNIN_API = "USER_SIGNIN_API";
 export const USER_LOGIN = "USER_LOGIN";
+export const GET_USER_API = "GET_USER_API";
+export const SET_USER_SEARCH = "SET_USER_SEARCH";
 
 // Drawer constants
 export const OPEN_DRAWER = "OPEN_DRAWER";
@@ -23,6 +25,7 @@ export const SET_SUBMIT_EDIT_PROJECT_FUNC = "SET_SUBMIT_EDIT_PROJECT_FUNC";
 export const SET_PROJECT_EDIT = "SET_PROJECT_EDIT";
 export const UPDATE_PROJECT_API = "UPDATE_PROJECT_API";
 export const DELETE_PROJECT_API = "DELETE_PROJECT_API";
+export const ASSIGN_USER_PROJECT_API = "ASSIGN_USER_PROJECT_API";
 
 // Notification constants
 export const SHOW_NOTIFICATION = "SHOW_NOTIFICATION";

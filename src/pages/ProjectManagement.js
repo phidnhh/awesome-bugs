@@ -1,16 +1,29 @@
 import React, { useEffect, useState } from 'react'
-import { Table, Button, Space } from 'antd';
+import { Table, Button, Space, Avatar, Popover, AutoComplete } from 'antd';
 // import ReactHtmlParser from 'react-html-parser';
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector } from "react-redux";
-import { DELETE_PROJECT_API, GET_PROJECT_CATEGORY_API, GET_PROJECT_LIST_API, OPEN_FORM_EDIT_PROJECT, SET_PROJECT_EDIT } from '../redux/constants/AwesomeBugs';
+import { ASSIGN_USER_PROJECT_API, DELETE_PROJECT_API, GET_PROJECT_CATEGORY_API, GET_PROJECT_LIST_API, GET_USER_API, OPEN_FORM_EDIT_PROJECT, SET_PROJECT_EDIT } from '../redux/constants/AwesomeBugs';
 import { Tag } from 'antd';
 import _ from "lodash";
 import FormEditProject from '../components/form/FormEditProject';
 import { Popconfirm, message } from 'antd';
 
 export default function ProjectManagement() {
+  // using on column members
+  const userSearch = useSelector(state => state.UserReducer.userSearch);
+  let optionUserSearch = userSearch?.map((user,index) => {
+    return {
+      value: user.userId.toString(),
+      label: user.name
+    }
+  });
+
+  const [inputOption, setInputOptions] = useState("");
+
+  // using all table project
   const {projectList, projectCategory} = useSelector(state => state.ProjectReducer);
+
   const [state, setState] = useState({
     filteredInfo: null,
     sortedInfo: {
@@ -58,26 +71,26 @@ export default function ProjectManagement() {
   };
 
 
-  let projectCategoryFilters = [];
-  projectCategory?.map((item) => {
-    projectCategoryFilters.push({
+  let projectCategoryFilters = projectCategory?.map((item) => {
+    return {
       text: item.projectCategoryName,
       value: item.projectCategoryName
-    });
+    }
   })  
 
-  let creatorFilters = [];
-  projectList?.map((item) => {
-    creatorFilters.push({
+  let creatorFilters = projectList?.map((item) => {
+    return {
       text: item.creator.name,
-      value: item.creator.name
-    });
+      value: item.creator.name      
+    }
   });
   creatorFilters = _.uniqWith(creatorFilters, _.isEqual);
 
   let { sortedInfo, filteredInfo } = state;
   sortedInfo = sortedInfo || {};
   filteredInfo = filteredInfo || {};
+
+
   const columns = [
     {
       title: "Id",
@@ -116,6 +129,52 @@ export default function ProjectManagement() {
       sorter: (item2, item1) => item2.creator?.name > item1.creator?.name? 1: -1,
       sortOrder: sortedInfo.columnKey === 'creator' && sortedInfo.order,
       ellipsis: true,
+    },
+    {
+      title: "Members",
+      key: "members",
+      render: (text, record, index) => {
+        return <div> {
+          record.members?.slice(0,3).map((member, index) => {
+            return <Avatar className="me-1 mt-1" key={index} src={member.avatar} />
+          })
+        }
+        { record.members?.length>3 ? <Avatar className="me-1 mt-1">...</Avatar>: "" }
+
+        <Popover placement="bottom" 
+          title={"Add user"} 
+          content={() => 
+            <AutoComplete
+              style={{width:"100%"}} 
+              options={optionUserSearch}
+              value={inputOption}
+              onChange={(textInput) => {
+                setInputOptions(textInput);
+              }}
+              onSelect={(valueSelect, option) => {
+                setInputOptions(option.label);
+                dispatch({
+                  type: ASSIGN_USER_PROJECT_API,
+                  userProject: {
+                    projectId: record.id,
+                    userId: option.value    
+                  }
+                })
+              }}
+              onSearch={(value) => {
+                dispatch({
+                  type: GET_USER_API,
+                  keyword: value
+                })
+              }}
+            />
+          } 
+          trigger="click"
+        >
+          <button className="btn btn-sm mt-1 btn-outline-secondary btn-add-member">+</button>
+        </Popover>        
+        </div>
+      }
     },
     // {
     //   title: "Description",

@@ -1,7 +1,7 @@
 import { call, delay, put, takeLatest } from "redux-saga/effects";
-import { awesomeBugsService } from "../../services/AwesomeBugsService";
+import { userService } from "../../services/UserService";
 import { ACCESS_TOKEN, STATUS_CODE, USER_LOGIN } from "../../util/constants/settingSystem";
-import { USER_SIGNIN_API } from "../constants/AwesomeBugs";
+import { GET_USER_API, SET_USER_SEARCH, USER_SIGNIN_API } from "../constants/AwesomeBugs";
 import { DISPLAY_LOADING, HIDE_LOADING } from "../constants/AwesomeBugs";
 import history from "./../../util/history";
 import { notification } from 'antd';
@@ -14,7 +14,7 @@ function * signinSaga(action) {
 
   try {
     const {data, status} = yield call(() => {
-      return awesomeBugsService.signin(action.userLogin);
+      return userService.signin(action.userLogin);
     });
 
     if(status === STATUS_CODE.SUCCESS) {
@@ -46,4 +46,32 @@ function * signinSaga(action) {
 
 export function * watchSigninSaga() {
   yield takeLatest(USER_SIGNIN_API, signinSaga)
+}
+
+
+// Get projectlist
+function * getUserSaga(action) {
+  try {
+    const {data, status} = yield call(() => {
+      return userService.getUser(action.keyword);
+    });
+
+    if(status === STATUS_CODE.SUCCESS) {
+      yield put({
+        type: SET_USER_SEARCH,
+        listUserSearch: data.content
+      });
+    }
+
+  } catch (error) {
+    console.log("~ error", error.response.data);
+  }
+
+  yield put({
+    type: HIDE_LOADING
+  });
+}
+
+export function * watchGetUserSaga() {
+  yield takeLatest(GET_USER_API, getUserSaga);
 }
