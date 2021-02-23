@@ -4,7 +4,7 @@ import avatarLogo from "./../assets/avatar/avatar-logo.png";
 
 export default function Menu() {
   return (
-    <div className="menu">
+    <div  style={{position:"fixed", height:"100vh", zIndex:"99", left: "80px"}}  className="menu">
       <div className="account">
         <div className="avatar">
           <img src={avatarLogo} alt="avatar logo phidndev" />
