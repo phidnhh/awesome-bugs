@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react"
 import { Route, Router, Switch, useHistory } from "react-router-dom";
-import Loading from "./components/Loading";
+import Loading from "./components/loading/Loading";
 import Drawer from "./hocs/Drawer";
 import CreateProject from "./pages/CreateProject";
 import Home from "./pages/Home";
@@ -20,15 +20,12 @@ export default function App() {
         <Drawer/>
         <Loading/>
         <Switch>
-          <LoginTemplate exact path="/" 
-            LoginComponent={Login}
-            SiderTableContentComponent={SiderTableContent}
-          />
           <LoginTemplate exact path="/login" 
             LoginComponent={Login}
             SiderTableContentComponent={SiderTableContent}
           />
           <Route exact path="/home" component={Home} />
+          <AwesomeBugsTemplate exact path="/" Component={indexAwesomeBugs}/>
           <AwesomeBugsTemplate exact path="/awesomebugs" Component={indexAwesomeBugs}/>
           <AwesomeBugsTemplate exact path="/createproject" Component={CreateProject}/>
           <AwesomeBugsTemplate exact path="/projectmanagement" Component={ProjectManagement}/>

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Layout, Menu } from 'antd';
-import jiraLogo from "./../assets/images/jiraLogo.svg";
+import jiraLogo from "./../../assets/images/jiraLogo.svg";
 
 const { Sider } = Layout;
 
