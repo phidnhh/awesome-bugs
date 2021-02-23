@@ -9,5 +9,6 @@ export function * rootSaga() {
       Project.watchCreateProjectSaga(),
       Project.watchGetProjectListSaga(),
       Project.watchUpdateProjectSaga(),
+      Project.watchDeleteProjectSaga(),
     ]);
 }
