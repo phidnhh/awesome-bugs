@@ -31,5 +31,9 @@ export const projectService = {
 
   assignUserProject: (userProject) => {
     return service.post("Project/assignUserProject", userProject);
+  },
+
+  removeUserFromProject: (userProject) => {
+    return service.post("Project/removeUserFromProject", userProject);
   }
 }

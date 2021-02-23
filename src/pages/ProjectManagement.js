@@ -3,7 +3,7 @@ import { Table, Button, Space, Avatar, Popover, AutoComplete } from 'antd';
 // import ReactHtmlParser from 'react-html-parser';
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector } from "react-redux";
-import { ASSIGN_USER_PROJECT_API, DELETE_PROJECT_API, GET_PROJECT_CATEGORY_API, GET_PROJECT_LIST_API, GET_USER_API, OPEN_FORM_EDIT_PROJECT, SET_PROJECT_EDIT } from '../redux/constants/AwesomeBugs';
+import { ASSIGN_USER_PROJECT_API, DELETE_PROJECT_API, GET_PROJECT_CATEGORY_API, GET_PROJECT_LIST_API, GET_USER_API, OPEN_FORM_EDIT_PROJECT, REMOVE_USER_PROJECT_API, SET_PROJECT_EDIT } from '../redux/constants/AwesomeBugs';
 import { Tag } from 'antd';
 import _ from "lodash";
 import FormEditProject from '../components/form/FormEditProject';
@@ -96,6 +96,7 @@ export default function ProjectManagement() {
       title: "Id",
       dataIndex: "id",
       key: "id",
+      width: "70px",
       sorter: (item2, item1) => item2.id - item1.id,
       sortOrder: sortedInfo.columnKey === 'id' && sortedInfo.order,
       ellipsis: true,
@@ -112,6 +113,7 @@ export default function ProjectManagement() {
       title: "Category",
       dataIndex: "categoryName",
       key: "categoryName",
+      width: "150px",
       filters: projectCategoryFilters,
       filteredValue: filteredInfo.categoryName || null,
       onFilter: (value, record) => record.categoryName.includes(value),
@@ -122,6 +124,7 @@ export default function ProjectManagement() {
     {
       title: "Creator",
       key: "creator",
+      width: "150px",
       filters: creatorFilters,
       filteredValue: filteredInfo.creator || null,
       render: (text, record, index) => <Tag color="blue">{record.creator?.name}</Tag>,
@@ -133,10 +136,59 @@ export default function ProjectManagement() {
     {
       title: "Members",
       key: "members",
+      width: "220px",
       render: (text, record, index) => {
         return <div> {
           record.members?.slice(0,3).map((member, index) => {
-            return <Avatar className="me-1 mt-1" key={index} src={member.avatar} />
+            return <Popover key={index} placement="top" title={"Members"} content={() => {
+              return <table className="table table-sm align-middle table-hover">
+                <thead>
+                  <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Avatar</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {record.members?.map((member,index) => {
+                    return <tr key={index}>
+                      <td className="text-center">{member.userId}</td>
+                      <td><Avatar src={member.avatar} /></td>
+                      <td>{member.name}</td>
+                      <td className="text-center">
+                        {/* <Popconfirm
+                          title="Are you sure to remove this user from the project?"
+                          onConfirm={() => {
+                            dispatch({
+                              type: REMOVE_USER_PROJECT_API,
+                              userProject: {
+                                projectId: record.id,
+                                userId: member.userId                 
+                              }
+                            });           
+                          }}
+                          okText="Yes"
+                          cancelText="No"
+                        >
+                        </Popconfirm> */}
+                        <span onClick={() => {
+                          dispatch({
+                            type: REMOVE_USER_PROJECT_API,
+                            userProject: {
+                              projectId: record.id,
+                              userId: member.userId                 
+                            }
+                          });                          
+                        }} className="action-delete-member-icon"><DeleteOutlined/></span>
+                      </td>
+                    </tr>
+                  })}
+                </tbody>
+              </table>
+            }}>
+              <Avatar className="me-1 mt-1" key={index} src={member.avatar} />
+            </Popover>
           })
         }
         { record.members?.length>3 ? <Avatar className="me-1 mt-1">...</Avatar>: "" }
@@ -185,6 +237,7 @@ export default function ProjectManagement() {
     {
       title: 'Action',
       key: 'action',
+      width: "80px",
       render: (text, record) => (
         <Space size="middle">
           <span onClick={() => {
@@ -211,7 +264,7 @@ export default function ProjectManagement() {
             cancelText="No"
           >
             <span className="action-icon"><DeleteOutlined/></span>
-          </Popconfirm>          
+          </Popconfirm>
         </Space>
       ),
     },
