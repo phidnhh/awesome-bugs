@@ -31,7 +31,7 @@ function CreateProject(props) {
   const projectCategory = useSelector(state => state.ProjectReducer.projectCategory);
 
   return (
-    <div className="container w-50">
+    <div style={{paddingLeft:330, width:"70%"}} className="container">
       <Header breadcrumb={ ["Awesome Bugs 1.0", "Create Project"] } />
       <form onSubmit={handleSubmit} className="form-create-project">
         <div className="form-group">

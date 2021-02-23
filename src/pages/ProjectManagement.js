@@ -3,7 +3,7 @@ import { Table, Button, Space } from 'antd';
 import ReactHtmlParser from 'react-html-parser';
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector } from "react-redux";
-import { GET_PROJECT_CATEGORY_API, GET_PROJECT_LIST_API, OPEN_FORM_EDIT_PROJECT } from '../redux/constants/AwesomeBugs';
+import { GET_PROJECT_CATEGORY_API, GET_PROJECT_LIST_API, OPEN_FORM_EDIT_PROJECT, SET_PROJECT_EDIT } from '../redux/constants/AwesomeBugs';
 import { Tag, Divider } from 'antd';
 import _ from "lodash";
 import FormEditProject from '../components/form/FormEditProject';
@@ -117,7 +117,12 @@ export default function ProjectManagement() {
             dispatch({
               type: OPEN_FORM_EDIT_PROJECT,
               Component: <FormEditProject/>,
-            })
+            });
+
+            dispatch({
+              type: SET_PROJECT_EDIT,
+              projectEdit: record
+            });
           }}className="action-icon"><EditOutlined/></span>
           <span className="action-icon"><DeleteOutlined/></span>
         </Space>

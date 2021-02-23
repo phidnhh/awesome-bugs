@@ -23,6 +23,7 @@
     "bootstrap": "5.0.0-beta2",
     "alertifyjs": "^1.0.11",
     "jquery": "^3.5.1",
-    "font-awesome": "^5.15.2"
+    "font-awesome": "^5.15.2",
+    "tinymce": "^5.7.0"
   }
 }

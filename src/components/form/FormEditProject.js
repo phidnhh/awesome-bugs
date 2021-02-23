@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { Editor } from '@tinymce/tinymce-react';
 import { connect, useDispatch, useSelector } from 'react-redux';
-import { GET_PROJECT_CATEGORY_API, SET_SUBMIT_EDIT_PROJECT_FUNC } from "./../../redux/constants/AwesomeBugs";
+import { GET_PROJECT_CATEGORY_API, SET_SUBMIT_EDIT_PROJECT_FUNC, UPDATE_PROJECT_API } from "./../../redux/constants/AwesomeBugs";
 import { withFormik } from 'formik';
 import * as yup from 'yup';
 
@@ -15,7 +15,6 @@ function FormEditProject(props) {
     handleSubmit,
     setFieldValue
   } = props;  
-    console.log("~ values", values)
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -34,7 +33,7 @@ function FormEditProject(props) {
   const projectCategory = useSelector(state => state.ProjectReducer.projectCategory);
 
   let handleEditorChange = (content, editor) => {
-    setFieldValue("description", values.description);
+    setFieldValue("description", content);
   }
 
   return (
@@ -68,6 +67,7 @@ function FormEditProject(props) {
           <Editor
             name="description"
             initialValue={values.description}
+            value={values.description}
             init={{
               height: 200,
               menubar: false,
@@ -109,12 +109,16 @@ const formEditProjectWithFormik  = withFormik({
     //   .required("Vui lòng nhập mật khẩu.")
   }),
   handleSubmit: (values, { props, setSubmitting }) => {
-    console.log("~ values", values);
-    // setSubmitting(true);
-    // props.dispatch({
-    //   type: "CREATE_PROJECT_API",
-    //   newProject: values
-    // });
+    let projectUpdate = {
+      ...values,
+      creator: props.projectEdit?.creator?.id
+    }
+
+    setSubmitting(true);
+    props.dispatch({
+      type: UPDATE_PROJECT_API,
+      projectUpdate: projectUpdate
+    });
   },
 })(FormEditProject);
 

@@ -45,4 +45,15 @@ export const awesomeBugsService = {
       }
     });
   },
+
+  updateProject: (projectUpdate) => {
+    return axios({
+      url: `${DOMAIN_AWESOMEBUGS}/Project/updateProject?projectId=${projectUpdate.id}`,
+      method: "PUT",
+      data: projectUpdate,
+      headers: {
+        "Authorization": "Bearer " + localStorage.getItem(ACCESS_TOKEN)
+      }
+    });
+  },
 }

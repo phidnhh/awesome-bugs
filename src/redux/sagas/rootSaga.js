@@ -8,5 +8,6 @@ export function * rootSaga() {
       Project.watchProjectCategorySaga(),
       Project.watchCreateProjectSaga(),
       Project.watchGetProjectListSaga(),
+      Project.watchUpdateProjectSaga(),
     ]);
 }
