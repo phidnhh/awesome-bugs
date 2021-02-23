@@ -1,7 +1,7 @@
 import { call, delay, put, takeLatest } from "redux-saga/effects";
 import { projectService } from "../../services/ProjectService";
 import { STATUS_CODE } from "../../util/constants/settingSystem";
-import { DISPLAY_LOADING, GET_PROJECT_LIST_API, HIDE_LOADING, SET_PROJECT_LIST, GET_PROJECT_CATEGORY_API, SET_PROJECT_CATEGORY, CREATE_PROJECT_API, UPDATE_PROJECT_API, CLOSE_DRAWER, DELETE_PROJECT_API, ASSIGN_USER_PROJECT_API } from "../constants/AwesomeBugs";
+import { DISPLAY_LOADING, GET_PROJECT_LIST_API, HIDE_LOADING, SET_PROJECT_LIST, GET_PROJECT_CATEGORY_API, SET_PROJECT_CATEGORY, CREATE_PROJECT_API, UPDATE_PROJECT_API, CLOSE_DRAWER, DELETE_PROJECT_API, ASSIGN_USER_PROJECT_API, REMOVE_USER_PROJECT_API } from "../constants/AwesomeBugs";
 import history from "./../../util/history";
 import { notification } from 'antd';
 
@@ -212,4 +212,41 @@ function * assignUserProject(action) {
 
 export function * watchAssignUserProjectSaga() {
   yield takeLatest(ASSIGN_USER_PROJECT_API, assignUserProject);
+}
+
+
+// Remove user from members of project
+function * removeUserFromProject(action) {
+  yield put({
+    type: DISPLAY_LOADING
+  });
+  yield delay(500);
+
+  try {
+    const {data, status} = yield call(() => {
+      return projectService.removeUserFromProject(action.userProject);
+    });
+
+    if(status === STATUS_CODE.SUCCESS) {
+      yield put({ type: GET_PROJECT_LIST_API });
+      notification["success"]({
+        message: "Remove user from members of project successfully!"
+      });
+    }
+
+  } catch (error) {
+    notification["error"]({
+      message: "Remove user from members of project failed!"
+    });
+    console.log("~ error", error.response.data);
+  }
+
+  yield put({
+    type: HIDE_LOADING
+  });
+}
+
+
+export function * watchRemoveUserFromProjectSaga() {
+  yield takeLatest(REMOVE_USER_PROJECT_API, removeUserFromProject);
 }

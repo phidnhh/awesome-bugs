@@ -13,5 +13,6 @@ export function * rootSaga() {
       Project.watchUpdateProjectSaga(),
       Project.watchDeleteProjectSaga(),
       Project.watchAssignUserProjectSaga(),
+      Project.watchRemoveUserFromProjectSaga(),
     ]);
 }

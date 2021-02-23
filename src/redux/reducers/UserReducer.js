@@ -19,7 +19,6 @@ export default (state = initialState, action) => {
 
     case SET_USER_SEARCH: {
       state.userSearch = action.listUserSearch;
-      console.log("~ state.userSearch", state.userSearch);
     }
   }
   return { ...state };

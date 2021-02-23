@@ -626,3 +626,8 @@ a.awesomebugs-menu-item.activeNavlink {
   width: 32px;
   height: 32px;
 }
+
+.action-delete-member-icon {
+  cursor: pointer;
+  vertical-align: super;
+}
