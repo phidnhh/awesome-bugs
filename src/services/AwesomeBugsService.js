@@ -1,59 +1,33 @@
 import axios from "axios"
 import { ACCESS_TOKEN, DOMAIN_AWESOMEBUGS } from "../util/constants/settingSystem"
+import service from "./baseService";
 
 export const awesomeBugsService = {
   signin: (userLogin) => {
-    return axios({
-      url: `${DOMAIN_AWESOMEBUGS}/Users/signin`,
-      method: "POST",
-      data: userLogin
-    });
+    return service.post("Users/signin", userLogin);
   },
 
   getProjectCategory: () => {
-    return axios({
-      url: `${DOMAIN_AWESOMEBUGS}/ProjectCategory`,
-      method: "GET"
-    });
+    return service.get("ProjectCategory");
   },
 
   createProject: (newProject) => {
-    return axios({
-      url: `${DOMAIN_AWESOMEBUGS}/Project/createProject`,
-      method: "POST",
-      data: newProject
-    });
+    return service.post("Project/createProject", newProject);
   },
 
   createProjectAuthorize: (newProject) => {
-    return axios({
-      url: `${DOMAIN_AWESOMEBUGS}/Project/createProjectAuthorize`,
-      method: "POST",
-      data: newProject,
-      headers: {
-        "Authorization": "Bearer " + localStorage.getItem(ACCESS_TOKEN)
-      }
-    });
+    return service.post("Project/createProjectAuthorize", newProject);
   },
 
   getProjectList: () => {
-    return axios({
-      url: `${DOMAIN_AWESOMEBUGS}/Project/getAllProject`,
-      method: "GET",
-      headers: {
-        "Authorization": "Bearer " + localStorage.getItem(ACCESS_TOKEN)
-      }
-    });
+    return service.get("Project/getAllProject");
   },
 
   updateProject: (projectUpdate) => {
-    return axios({
-      url: `${DOMAIN_AWESOMEBUGS}/Project/updateProject?projectId=${projectUpdate.id}`,
-      method: "PUT",
-      data: projectUpdate,
-      headers: {
-        "Authorization": "Bearer " + localStorage.getItem(ACCESS_TOKEN)
-      }
-    });
+    return service.put(`Project/updateProject?projectId=${projectUpdate.id}`, projectUpdate);
   },
+
+  deleteProject: (id) => {
+    return service.delete(`Project/deleteProject?projectId=${id}`);
+  }
 }
