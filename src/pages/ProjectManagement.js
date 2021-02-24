@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Table, Button, Space, Avatar, Popover, AutoComplete } from 'antd';
 // import ReactHtmlParser from 'react-html-parser';
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
@@ -20,6 +20,8 @@ export default function ProjectManagement() {
   });
 
   const [inputOption, setInputOptions] = useState("");
+
+  const searchRef = useRef(null);
 
   // using all table project
   const {projectList, projectCategory} = useSelector(state => state.ProjectReducer);
@@ -157,21 +159,6 @@ export default function ProjectManagement() {
                       <td><Avatar src={member.avatar} /></td>
                       <td>{member.name}</td>
                       <td className="text-center">
-                        {/* <Popconfirm
-                          title="Are you sure to remove this user from the project?"
-                          onConfirm={() => {
-                            dispatch({
-                              type: REMOVE_USER_PROJECT_API,
-                              userProject: {
-                                projectId: record.id,
-                                userId: member.userId                 
-                              }
-                            });           
-                          }}
-                          okText="Yes"
-                          cancelText="No"
-                        >
-                        </Popconfirm> */}
                         <span onClick={() => {
                           dispatch({
                             type: REMOVE_USER_PROJECT_API,
@@ -214,10 +201,15 @@ export default function ProjectManagement() {
                 })
               }}
               onSearch={(value) => {
-                dispatch({
-                  type: GET_USER_API,
-                  keyword: value
-                })
+                if(searchRef.current) {
+                  clearTimeout(searchRef.current);
+                }                
+                searchRef.current = setTimeout(() => {
+                  dispatch({
+                    type: GET_USER_API,
+                    keyword: value
+                  });
+                }, 300);
               }}
             />
           } 

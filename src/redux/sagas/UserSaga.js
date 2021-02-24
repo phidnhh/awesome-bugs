@@ -49,8 +49,9 @@ export function * watchSigninSaga() {
 }
 
 
-// Get projectlist
+// Get user by keyword
 function * getUserSaga(action) {
+  console.log("~ action.keyword", action.keyword);
   try {
     const {data, status} = yield call(() => {
       return userService.getUser(action.keyword);
