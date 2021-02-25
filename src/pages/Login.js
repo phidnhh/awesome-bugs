@@ -2,7 +2,7 @@ import React from 'react'
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import { Input, Button, Form } from "antd";
 import { withFormik } from 'formik';
-import * as Yup from "yup";
+import * as yup from "yup";
 import { connect } from "react-redux";
 import { signinAction } from '../redux/actions/AwesomeBugsAction';
 
@@ -58,12 +58,12 @@ const LoginFormWithFormik  = withFormik({
     email: "",
     password: ""
   }),
-  validationSchema: Yup.object().shape({
-    email: Yup.string()
-      .required("Vui lòng nhập email.")
-      .email("Email không hợp lệ."),
-    password: Yup.string()
-      .required("Vui lòng nhập mật khẩu.")
+  validationSchema: yup.object().shape({
+    email: yup.string()
+      .required("Please enter a email.")
+      .email("Please enter a valid email."),
+    password: yup.string()
+      .required("Please enter a password.")
   }),
   handleSubmit: ({email, password}, { props, setSubmitting }) => {
     setSubmitting(true);

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { Editor } from '@tinymce/tinymce-react';
 import { connect, useDispatch, useSelector } from 'react-redux';
-import { GET_PROJECT_CATEGORY_API, SET_SUBMIT_EDIT_PROJECT_FUNC, UPDATE_PROJECT_API } from "./../../redux/constants/AwesomeBugs";
+import { GET_PROJECT_CATEGORY_API, SET_SUBMIT_FUNCTION, UPDATE_PROJECT_API } from "./../../redux/constants/AwesomeBugs";
 import { withFormik } from 'formik';
 import * as yup from 'yup';
 
@@ -20,7 +20,7 @@ function FormEditProject(props) {
   useEffect(() => {
     // send handleSubmit func of withFormik to hocs/Drawer.js
     dispatch({
-      type: SET_SUBMIT_EDIT_PROJECT_FUNC,
+      type: SET_SUBMIT_FUNCTION,
       submitFunction: handleSubmit
     });
 
@@ -50,7 +50,7 @@ function FormEditProject(props) {
         <div className="form-group col-5">
           <label>Project Category</label>
           <div className="form-group">
-            <select onChange={handleChange} className="form-control" name="categoryId"> value={values.categoryId}
+            <select onChange={handleChange} className="form-select" name="categoryId"> value={values.categoryId}
               {
                 projectCategory.map((item, index) => {
                   return <option key={index} value={item.id}>{item.projectCategoryName}</option>
@@ -90,7 +90,7 @@ function FormEditProject(props) {
 }
 
 
-const formEditProjectWithFormik  = withFormik({
+const formEditProjectWithFormik = withFormik({
   enableReinitialize: true,
   mapPropsToValues: (props) => {
     let projectEdit = props.projectEdit;
@@ -102,11 +102,12 @@ const formEditProjectWithFormik  = withFormik({
     }
   },
   validationSchema: yup.object().shape({
-    // email: Yup.string()
-    //   .required("Vui lòng nhập email.")
-    //   .email("Email không hợp lệ."),
-    // password: Yup.string()
-    //   .required("Vui lòng nhập mật khẩu.")
+    id: yup.string()
+      .required("Please do not change project id."),
+    projectName: yup.string()
+      .required("Please enter a project name."),
+    categoryId: yup.string()
+      .required("Please select a project category.")
   }),
   handleSubmit: (values, { props, setSubmitting }) => {
     let projectUpdate = {

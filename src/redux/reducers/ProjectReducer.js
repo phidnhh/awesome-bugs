@@ -1,9 +1,10 @@
-import { SET_PROJECT_CATEGORY, SET_PROJECT_EDIT, SET_PROJECT_LIST } from "../constants/AwesomeBugs";
+import { SET_PROJECT_CATEGORY, SET_PROJECT_DETAIL, SET_PROJECT_EDIT, SET_PROJECT_LIST } from "../constants/AwesomeBugs";
 
 const initialState = {
   projectCategory: [],
   projectList: [],
-  projectEdit: {}
+  projectEdit: {},
+  projectDetail: {}
 }
 
 export default (state = initialState, action) => {
@@ -18,6 +19,10 @@ export default (state = initialState, action) => {
 
     case SET_PROJECT_EDIT: {
       state.projectEdit = action.projectEdit;
+    }; break;
+
+    case SET_PROJECT_DETAIL: {
+      state.projectDetail = action.projectDetail;
     }; break;
   }
   return {...state};

@@ -1,10 +1,6 @@
 import service from "./baseService";
 
 export const projectService = {
-  signin: (userLogin) => {
-    return service.post("Users/signin", userLogin);
-  },
-
   getProjectCategory: () => {
     return service.get("ProjectCategory");
   },
@@ -35,5 +31,9 @@ export const projectService = {
 
   removeUserFromProject: (userProject) => {
     return service.post("Project/removeUserFromProject", userProject);
+  },
+
+  getProjectDetail: (id) => {
+    return service.get(`Project/getProjectDetail?id=${id}`);
   }
 }
