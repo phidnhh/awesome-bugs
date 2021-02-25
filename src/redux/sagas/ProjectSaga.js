@@ -1,7 +1,7 @@
 import { call, delay, put, takeLatest } from "redux-saga/effects";
 import { projectService } from "../../services/ProjectService";
 import { STATUS_CODE } from "../../util/constants/settingSystem";
-import { DISPLAY_LOADING, GET_PROJECT_LIST_API, HIDE_LOADING, SET_PROJECT_LIST, GET_PROJECT_CATEGORY_API, SET_PROJECT_CATEGORY, CREATE_PROJECT_API, UPDATE_PROJECT_API, CLOSE_DRAWER, DELETE_PROJECT_API, ASSIGN_USER_PROJECT_API, REMOVE_USER_PROJECT_API } from "../constants/AwesomeBugs";
+import { DISPLAY_LOADING, GET_PROJECT_LIST_API, HIDE_LOADING, SET_PROJECT_LIST, GET_PROJECT_CATEGORY_API, SET_PROJECT_CATEGORY, CREATE_PROJECT_API, UPDATE_PROJECT_API, CLOSE_DRAWER, DELETE_PROJECT_API, ASSIGN_USER_PROJECT_API, REMOVE_USER_PROJECT_API, GET_PROJECT_DETAIL_API, SET_PROJECT_DETAIL } from "../constants/AwesomeBugs";
 import history from "./../../util/history";
 import { notification } from 'antd';
 
@@ -30,7 +30,6 @@ function * getProjectCategorySaga(action) {
     type: HIDE_LOADING
   });
 }
-
 
 export function * watchProjectCategorySaga() {
   yield takeLatest(GET_PROJECT_CATEGORY_API, getProjectCategorySaga);
@@ -71,6 +70,7 @@ function * createProjectSaga(action) {
 export function * watchCreateProjectSaga() {
   yield takeLatest(CREATE_PROJECT_API, createProjectSaga);
 }
+
 
 // Get projectlist
 function * getProjectListSaga(action) {
@@ -246,7 +246,43 @@ function * removeUserFromProject(action) {
   });
 }
 
-
 export function * watchRemoveUserFromProjectSaga() {
   yield takeLatest(REMOVE_USER_PROJECT_API, removeUserFromProject);
+}
+
+
+// Get project detail
+function * getProjectDetailSaga(action) {
+  yield put({
+    type: DISPLAY_LOADING
+  });
+  yield delay(500);
+
+  try {
+    const {data, status} = yield call(() => {
+      return projectService.getProjectDetail(action.projectId);
+    });
+
+    if(status === STATUS_CODE.SUCCESS) {
+      yield put({
+        type: SET_PROJECT_DETAIL,
+        projectDetail: data.content
+      });
+    }
+
+  } catch (error) {
+    console.log("~ error", error.response.data);
+    notification["error"]({
+      message: "Get project detail failed, please try again!"
+    });
+    history.push("/projectmanagement");
+  }
+
+  yield put({
+    type: HIDE_LOADING
+  });
+}
+
+export function * watchGetProjectDetailSaga() {
+  yield takeLatest(GET_PROJECT_DETAIL_API, getProjectDetailSaga);
 }

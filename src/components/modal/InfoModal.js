@@ -153,7 +153,7 @@ export default function InfoModal() {
                   </div>
                   <div className="priority" style={{marginBottom: 20}}>
                     <h6>PRIORITY</h6>
-                    <select defaultValue="1">
+                    <select defaultValue="1" className="form-select">
                       <option value="1">Highest</option>
                       <option>Medium</option>
                       <option>Low</option>

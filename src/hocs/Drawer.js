@@ -6,7 +6,7 @@ import { CLOSE_DRAWER, OPEN_DRAWER } from '../redux/constants/AwesomeBugs';
 
 const { Option } = Select;
 export default function Modal(props) {
-  const { visible, componentContentDrawer, callBackSubmit } = useSelector(state => state.DrawerReducer);
+  const { visible, title, componentContentDrawer, callBackSubmit } = useSelector(state => state.DrawerReducer);
 
   const dispatch = useDispatch();
 
@@ -25,7 +25,7 @@ export default function Modal(props) {
   return (
     <>
       <Drawer
-        title="Create a new account"
+        title={title}
         width={720}
         onClose={onClose}
         visible={visible}

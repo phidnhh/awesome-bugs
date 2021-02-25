@@ -15,7 +15,7 @@ function CreateProject(props) {
     handleBlur,
     handleSubmit,
     setFieldValue
-  } = props;  
+  } = props;
 
   let handleEditorChange = (content, editor) => {
     setFieldValue("description", content);
@@ -32,7 +32,7 @@ function CreateProject(props) {
 
   return (
     <div style={{paddingLeft:330, width:"70%"}} className="container">
-      <Header breadcrumb={ ["Awesome Bugs 1.0", "Create Project"] } />
+      <Header breadcrumb={ ["Create Project"] } />
       <form onSubmit={handleSubmit} className="form-create-project">
         <div className="form-group">
           <label>Name</label>
@@ -57,11 +57,11 @@ function CreateProject(props) {
                 bullist numlist outdent indent | removeformat | help'
             }}
             onEditorChange={handleEditorChange}
-          />          
+          ></Editor>
         </div>
         <div className="form-group">
           <label>Project Category</label>
-          <select onChange={handleChange} className="form-control" name="categoryId">
+          <select onChange={handleChange} className="form-select" name="categoryId">
             {
               projectCategory.map((item, index) => {
                 return <option key={index} value={item.id}>{item.projectCategoryName}</option>

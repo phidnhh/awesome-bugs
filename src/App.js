@@ -3,8 +3,7 @@ import { Route, Router, Switch, useHistory } from "react-router-dom";
 import Loading from "./components/loading/Loading";
 import Drawer from "./hocs/Drawer";
 import CreateProject from "./pages/CreateProject";
-import Home from "./pages/Home";
-import indexAwesomeBugs from "./pages/indexAwesomeBugs";
+import ProjectDetail from "./pages/ProjectDetail";
 import Login from "./pages/Login";
 import PageNotFound from "./pages/PageNotFound";
 import ProjectManagement from "./pages/ProjectManagement";
@@ -24,11 +23,11 @@ export default function App() {
             LoginComponent={Login}
             SiderTableContentComponent={SiderTableContent}
           />
-          <Route exact path="/home" component={Home} />
-          <AwesomeBugsTemplate exact path="/" Component={indexAwesomeBugs}/>
-          <AwesomeBugsTemplate exact path="/awesomebugs" Component={indexAwesomeBugs}/>
+          <AwesomeBugsTemplate exact path="/awesomebugs" Component={ProjectDetail}/>
           <AwesomeBugsTemplate exact path="/createproject" Component={CreateProject}/>
+          <AwesomeBugsTemplate exact path="/" Component={ProjectManagement}/>
           <AwesomeBugsTemplate exact path="/projectmanagement" Component={ProjectManagement}/>
+          <AwesomeBugsTemplate exact path="/projectdetail/:projectId" Component={ProjectDetail}/>
           <Route path="*" component={PageNotFound} />
         </Switch>
       </Router>

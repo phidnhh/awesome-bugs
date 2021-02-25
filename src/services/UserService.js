@@ -9,4 +9,7 @@ export const userService = {
     return service.get(`Users/getUser?keyword=${keyword}`);
   },
 
+  getUserByProjectId: (id) => {
+    return service.get(`Users/getUserByProjectId?idProject=${id}`);
+  }
 }

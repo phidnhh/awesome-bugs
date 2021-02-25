@@ -1,5 +1,5 @@
 import { USER_LOGIN } from "../../util/constants/settingSystem";
-import { SET_USER_SEARCH } from "./../constants/AwesomeBugs";
+import { SET_USER_BY_PROJECT_ID, SET_USER_SEARCH } from "./../constants/AwesomeBugs";
 
 let userLogin = {};
 if(localStorage.getItem(USER_LOGIN)) {
@@ -8,7 +8,8 @@ if(localStorage.getItem(USER_LOGIN)) {
 
 const initialState = {
   userLogin: userLogin,
-  userSearch: []
+  userSearch: [],
+  userByProjectId: []
 }
 
 export default (state = initialState, action) => {
@@ -19,7 +20,11 @@ export default (state = initialState, action) => {
 
     case SET_USER_SEARCH: {
       state.userSearch = action.listUserSearch;
-    }
+    }; break;
+    
+    case SET_USER_BY_PROJECT_ID: {
+      state.userByProjectId = action.userByProjectId;
+    }; break;
   }
   return { ...state };
 }

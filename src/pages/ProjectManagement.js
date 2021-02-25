@@ -1,13 +1,14 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Table, Button, Space, Avatar, Popover, AutoComplete } from 'antd';
 // import ReactHtmlParser from 'react-html-parser';
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector } from "react-redux";
-import { ASSIGN_USER_PROJECT_API, DELETE_PROJECT_API, GET_PROJECT_CATEGORY_API, GET_PROJECT_LIST_API, GET_USER_API, OPEN_FORM_EDIT_PROJECT, REMOVE_USER_PROJECT_API, SET_PROJECT_EDIT } from '../redux/constants/AwesomeBugs';
+import { ASSIGN_USER_PROJECT_API, DELETE_PROJECT_API, GET_PROJECT_CATEGORY_API, GET_PROJECT_LIST_API, GET_USER_SEARCH_API, OPEN_FORM_EDIT_PROJECT, REMOVE_USER_PROJECT_API, SET_PROJECT_EDIT } from '../redux/constants/AwesomeBugs';
 import { Tag } from 'antd';
 import _ from "lodash";
 import FormEditProject from '../components/form/FormEditProject';
 import { Popconfirm, message } from 'antd';
+import { NavLink } from 'react-router-dom';
 
 export default function ProjectManagement() {
   // using on column members
@@ -20,6 +21,7 @@ export default function ProjectManagement() {
   });
 
   const [inputOption, setInputOptions] = useState("");
+  const searchRef = useRef(null);
 
   // using all table project
   const {projectList, projectCategory} = useSelector(state => state.ProjectReducer);
@@ -105,6 +107,9 @@ export default function ProjectManagement() {
       title: "Project Name",
       dataIndex: "projectName",
       key: "projectName",
+      render: (text,record,index) => {
+        return <NavLink to={`/projectdetail/${record.id}`}>{text}</NavLink>
+      },
       sorter: (item2, item1) => item2.projectName > item1.projectName? 1: -1,
       sortOrder: sortedInfo.columnKey === 'projectName' && sortedInfo.order,
       ellipsis: true,
@@ -154,24 +159,9 @@ export default function ProjectManagement() {
                   {record.members?.map((member,index) => {
                     return <tr key={index}>
                       <td className="text-center">{member.userId}</td>
-                      <td><Avatar src={member.avatar} /></td>
+                      <td><Avatar src={`${member.avatar}&background=random&color=random`} /></td>
                       <td>{member.name}</td>
                       <td className="text-center">
-                        {/* <Popconfirm
-                          title="Are you sure to remove this user from the project?"
-                          onConfirm={() => {
-                            dispatch({
-                              type: REMOVE_USER_PROJECT_API,
-                              userProject: {
-                                projectId: record.id,
-                                userId: member.userId                 
-                              }
-                            });           
-                          }}
-                          okText="Yes"
-                          cancelText="No"
-                        >
-                        </Popconfirm> */}
                         <span onClick={() => {
                           dispatch({
                             type: REMOVE_USER_PROJECT_API,
@@ -187,7 +177,7 @@ export default function ProjectManagement() {
                 </tbody>
               </table>
             }}>
-              <Avatar className="me-1 mt-1" key={index} src={member.avatar} />
+              <Avatar className="me-1 mt-1" key={index} src={`${member.avatar}&background=random&color=random`} />
             </Popover>
           })
         }
@@ -214,10 +204,15 @@ export default function ProjectManagement() {
                 })
               }}
               onSearch={(value) => {
-                dispatch({
-                  type: GET_USER_API,
-                  keyword: value
-                })
+                if(searchRef.current) {
+                  clearTimeout(searchRef.current);
+                }                
+                searchRef.current = setTimeout(() => {
+                  dispatch({
+                    type: GET_USER_SEARCH_API,
+                    keyword: value
+                  });
+                }, 300);
               }}
             />
           } 
@@ -243,6 +238,7 @@ export default function ProjectManagement() {
           <span onClick={() => {
             dispatch({
               type: OPEN_FORM_EDIT_PROJECT,
+              title: "Edit Project",
               Component: <FormEditProject/>,
             });
 

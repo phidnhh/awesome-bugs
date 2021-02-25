@@ -1,7 +1,7 @@
 import { call, delay, put, takeLatest } from "redux-saga/effects";
 import { userService } from "../../services/UserService";
 import { ACCESS_TOKEN, STATUS_CODE, USER_LOGIN } from "../../util/constants/settingSystem";
-import { GET_USER_API, SET_USER_SEARCH, USER_SIGNIN_API } from "../constants/AwesomeBugs";
+import { GET_USER_BY_PROJECT_ID_API, GET_USER_SEARCH_API, SET_USER_SEARCH, USER_SIGNIN_API, SET_USER_BY_PROJECT_ID } from "../constants/AwesomeBugs";
 import { DISPLAY_LOADING, HIDE_LOADING } from "../constants/AwesomeBugs";
 import history from "./../../util/history";
 import { notification } from 'antd';
@@ -49,7 +49,7 @@ export function * watchSigninSaga() {
 }
 
 
-// Get projectlist
+// Get user by keyword
 function * getUserSaga(action) {
   try {
     const {data, status} = yield call(() => {
@@ -66,12 +66,38 @@ function * getUserSaga(action) {
   } catch (error) {
     console.log("~ error", error.response.data);
   }
-
-  yield put({
-    type: HIDE_LOADING
-  });
 }
 
 export function * watchGetUserSaga() {
-  yield takeLatest(GET_USER_API, getUserSaga);
+  yield takeLatest(GET_USER_SEARCH_API, getUserSaga);
+}
+
+
+// Get user by project id
+function * getUserByProjectIdSaga(action) {
+  try {
+    const {data, status} = yield call(() => {
+      return userService.getUserByProjectId(action.projectId);
+    });
+
+    if(status === STATUS_CODE.SUCCESS) {
+      yield put({
+        type: SET_USER_BY_PROJECT_ID,
+        userByProjectId: data.content
+      });
+    }
+
+  } catch (error) {
+    console.log("~ error", error.response.data);
+    if(error.response.data.statusCode = STATUS_CODE.NOT_FOUND) {
+      yield put({
+        type: SET_USER_BY_PROJECT_ID,
+        userByProjectId: []
+      });
+    }
+  }
+}
+
+export function * watchGetUserByProjectIdSaga() {
+  yield takeLatest(GET_USER_BY_PROJECT_ID_API, getUserByProjectIdSaga);
 }

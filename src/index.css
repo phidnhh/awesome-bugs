@@ -306,7 +306,7 @@
 .awesomebugs .info .search-block .fa-search {
   position: absolute;
   left: 5%;
-  top: 15%;
+  top: 23%;
   color: #67748b;
 }
 
@@ -414,7 +414,7 @@
 .modal-search .modal-content .modal-header .search-block .fa-search {
   position: absolute;
   left: 5%;
-  top: 15%;
+  top: 23%;
   color: #67748b;
 }
 
@@ -630,4 +630,14 @@ a.awesomebugs-menu-item.activeNavlink {
 .action-delete-member-icon {
   cursor: pointer;
   vertical-align: super;
+}
+
+.main .project-description {}
+
+.form-create-task .ant-slider {
+  margin: 2px 0;
+}
+
+.form-create-task .text-time-tracking {
+  font-size: 12px;
 }
