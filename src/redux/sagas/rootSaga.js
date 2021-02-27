@@ -25,5 +25,6 @@ export function * rootSaga() {
       Task.watchGetTaskDetailSaga(),
       Task.watchUpdateTaskSaga(),
       Task.watchHandleChangeSaga(),
+      Task.watchUpdateTaskStatusSaga()
     ]);
 }

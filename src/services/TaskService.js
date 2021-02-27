@@ -17,5 +17,8 @@ export const taskService = {
     service.get(`Project/getTaskDetail?taskId=${id}`),
 
   updateTask: (taskUpdate) => 
-    service.post("Project/updateTask", taskUpdate)
+    service.post("Project/updateTask", taskUpdate),
+  
+  updateStatus: (taskStatus) => 
+    service.put("Project/updateStatus", taskStatus)
 }

@@ -1,7 +1,8 @@
 import React from "react"
 import { Avatar } from "antd";
-import { GET_TASK_DETAIL_MODAL_API } from "../../redux/constants/AwesomeBugs";
+import { GET_TASK_DETAIL_MODAL_API, UPDATE_STATUS_TASK_API } from "../../redux/constants/AwesomeBugs";
 import { useDispatch } from "react-redux";
+import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 
 export default function Content(props) {
   const dispatch = useDispatch();
@@ -24,58 +25,116 @@ export default function Content(props) {
     }
   }
   
-  const renderCardTaskList = () => {
-    return projectDetail.lstTask?.map((taskListDetail,index) => {
-      return (
-        <div key={index} className="card">
-          <div className="card-header">
-            {taskListDetail.statusName}
-          </div>
-          <ul className="list-group list-group-flush">
-            {
-              taskListDetail.lstTaskDeTail.map((task,index) => {
-                return (
-                  <li key={index} className="list-group-item" data-bs-toggle="modal" data-bs-target="#infoModal"
-                    onClick={() => {
-                      dispatch({
-                        type: GET_TASK_DETAIL_MODAL_API,
-                        taskId: task.taskId
-                      });
-                    }}
-                  >
-                    <p>
-                      {task.taskName}
-                    </p>
-                    <div className="block" style={{display: 'flex'}}>
-                      <div className="block-left">
-                        {
-                          task.taskTypeDetail?.id == 1? 
-                            <i className="fa fa-exclamation-circle me-1"></i>:
-                            <i className="fa fa-check-square me-1" />
-                        }
-                        <i className="fa fa-arrow-up" style={{
-                          color: `${ renderSwitchPriority(task.priorityTask.priorityId) }`
-                        }}></i>
+  const handleDragEnd = (result) => {
+    console.log("~ result", result);
+    let { destination, source } = result;
+    if(!destination) {
+      return;
+    }
+    if(source.index === destination.index && source.droppableId === destination.droppableId) {
+      return;
+    }
+    dispatch({
+      type: UPDATE_STATUS_TASK_API,
+      taskStatus: {
+        taskId: result.draggableId,
+        statusId: destination.droppableId
+      },
+      projectId: projectDetail.id
+    })
+  }
 
+  const renderCardTaskList = () => {
+    return <DragDropContext onDragEnd={handleDragEnd}>
+      {
+        projectDetail.lstTask?.map((taskListDetail,index) => {
+          return (
+            <Droppable 
+              key={index}
+              droppableId={taskListDetail.statusId}
+            >
+              {
+                (provided) => {
+                  return (
+                    <div key={index} className="card">
+                      <div className="card-header">
+                        {taskListDetail.statusName}
                       </div>
-                      <div className="block-right">
-                        <div className="avatar-group" style={{display: 'flex'}}>
-                          {
-                            task.assigness.map((assignee, index) => {
-                              return <Avatar key={index} src={`${assignee.avatar}&background=random&color=random`} />
-                            })
-                          }
-                        </div>
-                      </div>
-                    </div>
-                  </li>
-                );
-              })
-            }
-          </ul>
-        </div>
-      );
-    }); 
+                      <ul 
+                        ref={provided.innerRef}
+                        {...provided.droppableProps}
+                        className="list-group list-group-flush"
+                      >
+                        {
+                          taskListDetail.lstTaskDeTail.map((task,index) => {
+                            return (
+                              <Draggable
+                                key={task.taskId.toString()}
+                                index={index}
+                                draggableId={task.taskId.toString()}
+                              >
+                                {
+                                  (provided) => {
+                                    return (
+                                      <li
+                                        ref={provided.innerRef}
+                                        {...provided.draggableProps}
+                                        {...provided.dragHandleProps}
+                                        key={index} 
+                                        className="list-group-item" 
+                                        data-bs-toggle="modal" 
+                                        data-bs-target="#infoModal"
+                                        onClick={() => {
+                                          dispatch({
+                                            type: GET_TASK_DETAIL_MODAL_API,
+                                            taskId: task.taskId
+                                          });
+                                        }}
+                                      >
+                                        <p>
+                                          {task.taskName}
+                                        </p>
+                                        <div className="block" style={{display: 'flex'}}>
+                                          <div className="block-left">
+                                            {
+                                              task.taskTypeDetail?.id == 1? 
+                                                <i className="fa fa-exclamation-circle me-1"></i>:
+                                                <i className="fa fa-check-square me-1" />
+                                            }
+                                            <i className="fa fa-arrow-up" style={{
+                                              color: `${ renderSwitchPriority(task.priorityTask.priorityId) }`
+                                            }}></i>
+
+                                          </div>
+                                          <div className="block-right">
+                                            <div className="avatar-group" style={{display: 'flex'}}>
+                                              {
+                                                task.assigness.map((assignee, index) => {
+                                                  return <Avatar key={index} src={`${assignee.avatar}&background=random&color=random`} />
+                                                })
+                                              }
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </li>                                      
+                                    )
+                                  }
+                                }
+                              </Draggable>
+                            );
+                          })
+                        }
+                        {provided.placeholder}
+                      </ul>
+                    </div>                    
+                  )
+                }
+              }
+            </Droppable>
+          );
+        })
+      }
+    </DragDropContext>
   }
   return (
     <>
