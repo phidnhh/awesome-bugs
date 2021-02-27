@@ -7,9 +7,6 @@ import { GET_PROJECT_DETAIL_API } from '../redux/constants/AwesomeBugs';
 
 export default function ProjectDetail(props) {
   const dispatch = useDispatch();
-  const projectDetail = useSelector(state => state.ProjectReducer.projectDetail);
-  console.log("~ projectDetail", projectDetail);
-
   useEffect(() => {
     let projectId = props.match?.params.projectId;
     if(projectId) {
@@ -19,6 +16,9 @@ export default function ProjectDetail(props) {
       });
     }
   }, []);
+
+  const projectDetail = useSelector(state => state.ProjectReducer.projectDetail);
+  console.log("~ projectDetail", projectDetail);
 
   return (
     <div className="main">

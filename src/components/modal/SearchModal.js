@@ -10,7 +10,7 @@ export default function SearchModal() {
               <input className="search" />
               <i className="fa fa-search" />
             </div>
-            <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+            <button type="button" className="close" data-bs-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">×</span>
             </button>
           </div>

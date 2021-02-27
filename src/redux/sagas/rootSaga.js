@@ -21,6 +21,9 @@ export function * rootSaga() {
       Task.watchGetTaskTypeSaga(),
       Task.watchGetTaskPrioritySaga(),
       Task.watchGetTaskStatusSaga(),
-      Task.watchCreateTaskSaga()
+      Task.watchCreateTaskSaga(),
+      Task.watchGetTaskDetailSaga(),
+      Task.watchUpdateTaskSaga(),
+      Task.watchHandleChangeSaga(),
     ]);
 }
