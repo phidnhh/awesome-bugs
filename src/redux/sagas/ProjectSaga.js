@@ -137,10 +137,10 @@ function * updateProjectSaga(action) {
   });
 }
 
-
 export function * watchUpdateProjectSaga() {
   yield takeLatest(UPDATE_PROJECT_API, updateProjectSaga);
 }
+
 
 // Delete project
 function * deleteProjectSaga(action) {

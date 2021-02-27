@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Editor } from '@tinymce/tinymce-react';
 import { Select, Slider } from 'antd';
 import { connect, useSelector, useDispatch } from "react-redux";
-import { CREATE_TASK_API, GET_PROJECT_DETAIL_API, GET_PROJECT_LIST_API, GET_TASK_PRIORITY_API, GET_TASK_STATUS_API, GET_TASK_TYPE_API, GET_USER_BY_PROJECT_ID_API, GET_USER_SEARCH_API, SET_SUBMIT_FUNCTION } from '../../redux/constants/AwesomeBugs';
+import { CREATE_TASK_API, GET_PROJECT_LIST_API, GET_TASK_PRIORITY_API, GET_TASK_STATUS_API, GET_TASK_TYPE_API, GET_USER_BY_PROJECT_ID_API, SET_SUBMIT_FUNCTION } from '../../redux/constants/AwesomeBugs';
 import { Form, withFormik } from 'formik';
 import * as yup from 'yup';
 
@@ -140,7 +140,7 @@ function FormCreateTask(props) {
             }}
             onSearch={(value) => {}}
             style={{ width: '100%' }}
-          ></Select>        
+          ></Select>
         </div>
         <div className="form-group col-6">
           <label>Time tracking</label>

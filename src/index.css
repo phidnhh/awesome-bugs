@@ -8,6 +8,16 @@
   font-style: normal;
 }
 
+@font-face {
+  font-family: "CircularMedium";
+  src: local("CircularMedium"),
+      url("./assets/fonts/CircularStd-Medium.woff2") format("woff2"),
+      url("./assets/fonts/CircularStd-Medium.woff") format("woff"),
+      url("./assets/fonts/CircularStd-Medium.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
 * {
   font-variant: none!important;
 }
@@ -337,6 +347,8 @@
 }
 
 .awesomebugs .content .card {
+  width: 17rem;
+  height: auto;
   margin-right: 10px;
   background-color: #f4f5f7;
 }
@@ -353,6 +365,9 @@
 
 .awesomebugs .content .card .list-group .list-group-item {
   margin: 5px;
+  border-radius: 3px;
+  box-shadow: rgba(9, 30, 66, 0.25) 0px 1px 2px 0px;
+  cursor: pointer;
 }
 
 .list-group-item p {
@@ -375,12 +390,12 @@
   color: #5fb03e;
 }
 
-.fa-arrow-up {
-  color: #d85463;
+.fa-check-square {
+  color: #4fade6;
 }
 
-.fa-check-square {
-  color: #62a0ce;
+.fa-exclamation-circle {
+  color: #e44d42;
 }
 
 /* Modal */
@@ -450,8 +465,27 @@
   border-bottom: none;
 }
 
+.modal-info .modal-content .modal-body {
+  padding-top: 0;
+}
+
+.task-title {
+  margin-left: -15px;
+}
+
+.task-title:hover {
+  background: rgb(223, 225, 230);
+}
+
 .task-title span {
-  margin-left: 10px;
+  font-size: 16px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: rgb(94, 108, 132);
+}
+
+.task-title .ant-select-arrow {
+  display: none;
 }
 
 .task-click div span {
@@ -506,15 +540,15 @@
 
 .item {
   margin-right: 20px;
-  background: #e9eaf0;
-  padding: 5px;
-  border-radius: 5px;
-  flex-basis: 50%;
+  background: white;
+  border: 1px solid #d9d9d9;
+  padding: 5px 10px;
+  align-items: center;
+  cursor: pointer;
 }
 
-.item .avatar img {
-  width: 30px;
-  height: 30px;
+.item:hover {
+  background: #DFE1E6;
 }
 
 .item .name {
@@ -529,42 +563,29 @@
   margin-bottom: 20px;
 }
 
-.estimate-hours {
-  height: 35px;
-  background: #F2F3F7;
-  margin-bottom: 20px;
-  border: 1px solid ;
-  border-color: #ced4da;
-  width: 100%;
-  padding: 8px;
-}
-
-.estimate-hours:focus{
-  background: white;
-}
-
-.time-tracking{
+.time-tracking {
   padding-bottom: 10px;
   margin-bottom: 10px;
   border-bottom: 1px solid #ced4da;
 }
 
-.time-tracking h6{
-  font-size: 12px;
-  color: #929398;
-}
-
-.fa-clock{
+.time-tracking .fa-clock{
   margin-right: 10px;
 }
 
-.progress{
+.time-tracking .progress{
   height: 5px!important;
   width: 100%;
+  margin-top: 4px;
 }
 
-.logged, .estimate-time{
+.time-tracking .logged, .estimate-time{
   font-size: 14px;
+}
+
+.estimate .form-control {
+  height: 31px;
+  border-radius: 0;
 }
 
 a.awesomebugs-menu-item {
@@ -640,4 +661,56 @@ a.awesomebugs-menu-item.activeNavlink {
 
 .form-create-task .text-time-tracking {
   font-size: 12px;
+}
+
+.assignees .row {
+  margin-left: 0;
+}
+
+.assignees .card-assignees {
+  margin: 0 5px 5px 0;
+  cursor: pointer;
+}
+
+.assignees .card-assignees:hover {
+  background: rgb(223, 225, 230);
+}
+
+.assignees .card-assignees .ant-card-body {
+  padding: 5px;
+}
+
+.assignees .card-assignees .ant-card-meta-avatar {
+  padding-right: 5px;
+  padding-top: 5px;
+}
+
+.assignees .card-assignees .ant-card-meta-title {
+  color: #172b4d;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.assignees .card-assignees .ant-card-meta-detail > div:not(:last-child) {
+  margin-bottom: 0;
+}
+
+.assignees .card-assignees .ant-card-meta-description {
+  color: #172b4d;
+  font-size: 16px;
+  line-height: 16px;
+  text-align: center;
+}
+
+.add-more-assignees .ant-select-arrow {
+  display: none;
+}
+
+.add-more-assignees span.ant-select-selection-placeholder {
+  font-family: 'CircularMedium';
+  color: rgb(0, 82, 204);
+}
+
+.dropdown-add-more-assignees {
+  min-width: 200px!important;
 }

@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { Table, Button, Space, Avatar, Popover, AutoComplete } from 'antd';
-// import ReactHtmlParser from 'react-html-parser';
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector } from "react-redux";
 import { ASSIGN_USER_PROJECT_API, DELETE_PROJECT_API, GET_PROJECT_CATEGORY_API, GET_PROJECT_LIST_API, GET_USER_SEARCH_API, OPEN_FORM_EDIT_PROJECT, REMOVE_USER_PROJECT_API, SET_PROJECT_EDIT } from '../redux/constants/AwesomeBugs';

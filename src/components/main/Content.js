@@ -1,62 +1,77 @@
-import React from 'react'
-import avatar1 from "./../../assets/avatar/avatar1.jfif";
-import avatar2 from "./../../assets/avatar/avatar2.jfif";
+import React from "react"
+import { Avatar } from "antd";
+import { GET_TASK_DETAIL_MODAL_API } from "../../redux/constants/AwesomeBugs";
+import { useDispatch } from "react-redux";
 
 export default function Content(props) {
+  const dispatch = useDispatch();
   const projectDetail = props.projectDetail;
+  
+  let renderSwitchPriority = (priority) => {
+    switch(priority) {
+      case 1:
+        return "rgb(205, 19, 23)";
+      case 2:
+        return "rgb(233, 73, 74)";
+      case 3:
+        return "rgb(233, 127, 51)";
+      case 4:
+        return "rgb(45, 135, 56)";
+      case 5:
+        return "rgb(87, 165, 90)";
+      default:
+        return "rgb(233, 127, 51)";
+    }
+  }
+  
   const renderCardTaskList = () => {
-    return projectDetail.lstTask?.map((task,index) => {
+    return projectDetail.lstTask?.map((taskListDetail,index) => {
       return (
-        <div key={index} className="card" style={{width: '17rem', height: '25rem'}}>
+        <div key={index} className="card">
           <div className="card-header">
-            {task.statusName}
+            {taskListDetail.statusName}
           </div>
           <ul className="list-group list-group-flush">
-            <li className="list-group-item" data-toggle="modal" data-target="#infoModal" style={{cursor: 'pointer'}}>
-              <p>
-                Each issue has a single reporter but can have multiple
-                assignees
-              </p>
-              <div className="block" style={{display: 'flex'}}>
-                <div className="block-left">
-                  <i className="fa fa-bookmark" />
-                  <i className="fa fa-arrow-up" />
-                </div>
-                <div className="block-right">
-                  <div className="avatar-group" style={{display: 'flex'}}>
-                    <div className="avatar">
-                      <img src={avatar1} alt="avatar" />
+            {
+              taskListDetail.lstTaskDeTail.map((task,index) => {
+                return (
+                  <li key={index} className="list-group-item" data-bs-toggle="modal" data-bs-target="#infoModal"
+                    onClick={() => {
+                      dispatch({
+                        type: GET_TASK_DETAIL_MODAL_API,
+                        taskId: task.taskId
+                      });
+                    }}
+                  >
+                    <p>
+                      {task.taskName}
+                    </p>
+                    <div className="block" style={{display: 'flex'}}>
+                      <div className="block-left">
+                        {
+                          task.taskTypeDetail?.id == 1? 
+                            <i className="fa fa-exclamation-circle me-1"></i>:
+                            <i className="fa fa-check-square me-1" />
+                        }
+                        <i className="fa fa-arrow-up" style={{
+                          color: `${ renderSwitchPriority(task.priorityTask.priorityId) }`
+                        }}></i>
+
+                      </div>
+                      <div className="block-right">
+                        <div className="avatar-group" style={{display: 'flex'}}>
+                          {
+                            task.assigness.map((assignee, index) => {
+                              return <Avatar key={index} src={`${assignee.avatar}&background=random&color=random`} />
+                            })
+                          }
+                        </div>
+                      </div>
                     </div>
-                    <div className="avatar">
-                      <img src={avatar2} alt="avatar" />
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </li>
-            <li className="list-group-item">
-              <p>
-                Each issue has a single reporter but can have multiple
-                assignees
-              </p>
-              <div className="block" style={{display: 'flex'}}>
-                <div className="block-left">
-                  <i className="fa fa-check-square" />
-                  <i className="fa fa-arrow-up" />
-                </div>
-                <div className="block-right">
-                  <div className="avatar-group" style={{display: 'flex'}}>
-                    <div className="avatar">
-                      <img src={avatar1} alt="avatar" />
-                    </div>
-                    <div className="avatar">
-                      <img src={avatar2} alt="avatar" />
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </li>
-            <li className="list-group-item">Vestibulum at eros</li>
+                  </li>
+                );
+              })
+            }
           </ul>
         </div>
       );
@@ -77,7 +92,7 @@ export default function Content(props) {
   BACKLOG 3
 </div>
 <ul className="list-group list-group-flush">
-  <li className="list-group-item" data-toggle="modal" data-target="#infoModal" style={{cursor: 'pointer'}}>
+  <li className="list-group-item" data-bs-toggle="modal" data-bs-target="#infoModal" style={{cursor: 'pointer'}}>
     <p>
       Each issue has a single reporter but can have multiple
       assignees

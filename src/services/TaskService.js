@@ -1,19 +1,21 @@
 import service from "./baseService";
 
 export const taskService = {
-  getTaskType: () => {
-    return service.get("TaskType/getAll");
-  },
-  
-  getTaskPriority: () => {
-    return service.get("Priority/getAll");
-  },
-  
-  getTaskStatus: () => {
-    return service.get("Status/getAll");
-  },
+  getTaskType: () => 
+    service.get("TaskType/getAll"),
 
-  createTask: (newTask) => {
-    return service.post("Project/createTask", newTask);
-  }
+  getTaskPriority: () => 
+    service.get("Priority/getAll"),
+
+  getTaskStatus: () => 
+    service.get("Status/getAll"),
+
+  createTask: (newTask) => 
+    service.post("Project/createTask", newTask),
+
+  getTaskDetail: (id) => 
+    service.get(`Project/getTaskDetail?taskId=${id}`),
+
+  updateTask: (taskUpdate) => 
+    service.post("Project/updateTask", taskUpdate)
 }

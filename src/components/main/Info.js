@@ -1,5 +1,5 @@
 import React from 'react'
-import ReactHtmlParser from 'react-html-parser';
+import parse from "html-react-parser";
 
 export default function Info(props) {
   const projectDetail = props.projectDetail;
@@ -12,7 +12,7 @@ export default function Info(props) {
   }
   return (
     <>
-      <div className="project-description"> { ReactHtmlParser(projectDetail.description) } </div>
+      <div className="project-description"> { projectDetail.description? parse(projectDetail.description): "" } </div>
       <div className="info" style={{display: 'flex'}}>
         <div className="search-block">
           <input className="search" />
