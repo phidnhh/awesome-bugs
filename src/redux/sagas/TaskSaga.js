@@ -1,8 +1,7 @@
 import { call, delay, put, select, takeLatest } from "redux-saga/effects";
 import { taskService } from "../../services/TaskService";
 import { STATUS_CODE } from "../../util/constants/settingSystem";
-import { GET_TASK_PRIORITY_API, GET_TASK_TYPE_API, SET_TASK_TYPE_LIST, SET_TASK_PRIORITY_LIST, SET_TASK_STATUS_LIST, GET_TASK_STATUS_API, CREATE_TASK_API, DISPLAY_LOADING, HIDE_LOADING, CLOSE_DRAWER, SET_TASK_DETAIL_MODAL, GET_TASK_DETAIL_MODAL_API, UPDATE_TASK_API, HANDLE_CHANGE_SAGA, UPDATE_TASK_DETAIL_MODAL, UPDATE_TASK_ASSIGNESS, REMOVE_TASK_ASSIGNEE, GET_PROJECT_DETAIL_API, SET_PROJECT_DETAIL } from "../constants/AwesomeBugs";
-import history from "./../../util/history";
+import { GET_TASK_PRIORITY_API, GET_TASK_TYPE_API, SET_TASK_TYPE_LIST, SET_TASK_PRIORITY_LIST, SET_TASK_STATUS_LIST, GET_TASK_STATUS_API, CREATE_TASK_API, DISPLAY_LOADING, HIDE_LOADING, CLOSE_DRAWER, SET_TASK_DETAIL_MODAL, GET_TASK_DETAIL_MODAL_API, UPDATE_TASK_API, HANDLE_CHANGE_SAGA, UPDATE_TASK_DETAIL_MODAL, UPDATE_TASK_ASSIGNESS, REMOVE_TASK_ASSIGNEE, GET_PROJECT_DETAIL_API, UPDATE_STATUS_TASK_API } from "../constants/AwesomeBugs";
 import { notification } from 'antd';
 
 // Get task type
@@ -20,7 +19,7 @@ function * getTaskTypeSaga(action) {
     }
 
   } catch (error) {
-    console.log("~ error", error.response.data);
+    console.log("~ error", error.response?.data);
   }
 }
 
@@ -44,7 +43,7 @@ function * getTaskPrioritySaga(action) {
     }
 
   } catch (error) {
-    console.log("~ error", error.response.data);
+    console.log("~ error", error.response?.data);
   }
 }
 
@@ -68,7 +67,7 @@ function * getTaskStatusSaga(action) {
     }
 
   } catch (error) {
-    console.log("~ error", error.response.data);
+    console.log("~ error", error.response?.data);
   }
 }
 
@@ -101,7 +100,7 @@ function * createTaskSaga(action) {
     notification["error"]({
       message: "Create project failed!"
     });
-    console.log("~ error", error.response.data);
+    console.log("~ error", error.response?.data);
   }
 
   yield put({
@@ -129,7 +128,7 @@ function * getTaskDetailModalSaga(action) {
     }
 
   } catch (error) {
-    console.log("~ error", error.response.data);
+    console.log("~ error", error.response?.data);
   }
 }
 
@@ -146,7 +145,7 @@ function * updateTaskSaga(action) {
     });
 
     if(status === STATUS_CODE.SUCCESS) {
-      yield put ({
+      yield put({
         type: GET_PROJECT_DETAIL_API,
         projectId: action.taskUpdate.projectId
       });
@@ -159,9 +158,9 @@ function * updateTaskSaga(action) {
 
   } catch (error) {
     notification["error"]({
-      message: "Update project failed!"
+      message: "Update task failed!"
     });
-    console.log("~ error", error.response.data);
+    console.log("~ error", error.response?.data);
   }
 }
 
@@ -228,4 +227,35 @@ function * handleChangeSaga(action) {
 
 export function * watchHandleChangeSaga() {
   yield takeLatest(HANDLE_CHANGE_SAGA, handleChangeSaga);
+}
+
+
+// Update task status
+function * updateTaskStatusSaga(action) {
+  try {
+      const { data, status } = yield call(() => {
+        return taskService.updateStatus(action.taskStatus);
+      });
+
+      if (status == STATUS_CODE.SUCCESS) {
+        yield put({
+          type: GET_PROJECT_DETAIL_API,
+          projectId: action.projectId
+        });
+  
+        yield put({
+          type: GET_TASK_DETAIL_MODAL_API,
+          taskId: action.taskStatus.taskId
+        });
+      }
+  } catch (error) {
+    notification["error"]({
+      message: "Update task status failed!"
+    });
+    console.log("~ error", error);
+  }
+}
+
+export function * watchUpdateTaskStatusSaga() {
+  yield takeLatest(UPDATE_STATUS_TASK_API, updateTaskStatusSaga)
 }
