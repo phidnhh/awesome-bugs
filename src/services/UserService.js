@@ -1,15 +1,18 @@
 import service from "./baseService";
 
 export const userService = {
-  signin: (userLogin) => {
-    return service.post("Users/signin", userLogin);
-  },
+  signin: (userLogin) => 
+    service.post("Users/signin", userLogin),
   
-  getUser: (keyword) => {
-    return service.get(`Users/getUser?keyword=${keyword}`);
-  },
+  signup: (newUser) => 
+    service.post("Users/signup", newUser),
 
-  getUserByProjectId: (id) => {
-    return service.get(`Users/getUserByProjectId?idProject=${id}`);
-  }
+  testToken: () => 
+    service.post("Users/TestToken"),
+  
+  getUser: (keyword) => 
+    service.get(`Users/getUser?keyword=${keyword}`),
+
+  getUserByProjectId: (id) => 
+    service.get(`Users/getUserByProjectId?idProject=${id}`)
 }

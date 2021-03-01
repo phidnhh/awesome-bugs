@@ -7,6 +7,8 @@ import * as Comment from "./CommentSaga";
 export function * rootSaga() {
   yield all([
     User.watchSigninSaga(),
+    User.watchSignupSaga(),
+    User.watchTestTokenSaga(),
     User.watchGetUserSaga(),
     User.watchGetUserByProjectIdSaga(),
     

@@ -1,5 +1,5 @@
 import { USER_LOGIN } from "../../util/constants/settingSystem";
-import { SET_USER_BY_PROJECT_ID, SET_USER_SEARCH, GET_USER_LOGIN, SET_USER_LOGIN } from "./../constants/AwesomeBugs";
+import { SET_USER_BY_PROJECT_ID, SET_USER_SEARCH, SET_USER_LOGIN } from "./../constants/AwesomeBugs";
 
 let userLogin = {};
 if(localStorage.getItem(USER_LOGIN)) {

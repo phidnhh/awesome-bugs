@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux';
 import parse from "html-react-parser";
 import { Select, Avatar, Card, Button } from 'antd';
-import { GET_TASK_PRIORITY_API, GET_TASK_STATUS_API, GET_TASK_TYPE_API, UPDATE_TASK_ASSIGNESS, UPDATE_TASK_DETAIL_MODAL, REMOVE_TASK_ASSIGNEE, HANDLE_CHANGE_SAGA, GET_USER_LOGIN, INSERT_COMMENT_API, DELETE_COMMENT_API } from '../../redux/constants/AwesomeBugs';
+import { GET_TASK_PRIORITY_API, GET_TASK_STATUS_API, GET_TASK_TYPE_API, UPDATE_TASK_ASSIGNESS, UPDATE_TASK_DETAIL_MODAL, REMOVE_TASK_ASSIGNEE, HANDLE_CHANGE_SAGA, INSERT_COMMENT_API, DELETE_COMMENT_API } from '../../redux/constants/AwesomeBugs';
 import { Editor } from '@tinymce/tinymce-react';
 import _ from "lodash";
 import { notification } from 'antd';
