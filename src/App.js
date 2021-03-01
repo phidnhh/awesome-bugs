@@ -11,6 +11,7 @@ import SiderTableContent from "./pages/SiderTableContent";
 import { AwesomeBugsTemplate } from "./templates/AwesomeBugsTemplate";
 import { LoginTemplate } from "./templates/LoginTemplate";
 import history from "./util/history";
+import Signup from "./pages/Signup";
 
 export default function App() {
   return (
@@ -21,6 +22,10 @@ export default function App() {
         <Switch>
           <LoginTemplate exact path="/login" 
             LoginComponent={Login}
+            SiderTableContentComponent={SiderTableContent}
+          />
+          <LoginTemplate exact path="/signup" 
+            LoginComponent={Signup}
             SiderTableContentComponent={SiderTableContent}
           />
           <AwesomeBugsTemplate exact path="/awesomebugs" Component={ProjectDetail}/>

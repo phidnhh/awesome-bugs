@@ -33,7 +33,7 @@ function FormCreateTask(props) {
 
   const { taskTypeList, taskPriorityList, taskStatusList } = useSelector(state => state.TaskReducer);
   const projectList = useSelector(state => state.ProjectReducer.projectList);
-    
+
   useEffect(() => {
     if(projectList[0]?.id) {
       dispatch({
@@ -230,7 +230,7 @@ const formCreateTaskWithFormik = withFormik({
       timeTrackingRemaining: 0,
       projectId: projectList[0]?.id,
       typeId: taskTypeList[0]?.id,
-      priorityId: taskPriorityList[0]?.id
+      priorityId: taskPriorityList[0]?.priorityId
     }
   },
   validationSchema: yup.object().shape({
@@ -242,7 +242,8 @@ const formCreateTaskWithFormik = withFormik({
     setSubmitting(true);
     props.dispatch({
       type: CREATE_TASK_API,
-      newTask: values
+      newTask: values,
+      projectId: values.projectId
     });
   },
 })(FormCreateTask);
