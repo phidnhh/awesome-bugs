@@ -1,12 +1,30 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import { Input, Button, Form } from "antd";
 import { withFormik } from 'formik';
 import * as yup from "yup";
 import { connect } from "react-redux";
-import { signinAction } from '../redux/actions/AwesomeBugsAction';
+import { USER_SIGNIN_API } from '../redux/constants/AwesomeBugs';
+import history from "./../util/history";
+import { USER_LOGIN } from '../util/constants/settingSystem';
+import { notification } from 'antd';
+import { NavLink } from 'react-router-dom';
 
-function Login(props) {
+function Login(props) { 
+  let userLogin = {};
+  if(localStorage.getItem(USER_LOGIN)) {
+    userLogin = JSON.parse(localStorage.getItem(USER_LOGIN));
+  }
+  
+  useEffect(() => {
+    if(userLogin.id) {
+      history.push("/");
+      notification["warning"]({
+        message: "You are already logged in, you need to log out before logging in as different user.",
+      });
+    }
+  }, []);
+  
   const {
     values,
     touched,
@@ -36,7 +54,10 @@ function Login(props) {
               Đăng Nhập
             </Button>
           </Form.Item>
-          
+          <div className="text-center mb-4">
+            <span>Bạn chưa có tài khoản?</span>
+            <NavLink to="/register" className="navlink-login ms-2">Đăng kí</NavLink>
+          </div>
           <div className="division">
             <div className="line l"></div>
             <span>hoặc</span>
@@ -60,14 +81,20 @@ const LoginFormWithFormik  = withFormik({
   }),
   validationSchema: yup.object().shape({
     email: yup.string()
-      .required("Please enter a email.")
-      .email("Please enter a valid email."),
+      .required("Vui lòng nhập email.")
+      .email("Email phải có dạng: example@gmail.com!"),
     password: yup.string()
-      .required("Please enter a password.")
+      .required("Vui lòng nhập mật khẩu.")
   }),
   handleSubmit: ({email, password}, { props, setSubmitting }) => {
     setSubmitting(true);
-    props.dispatch(signinAction(email, password, props.history));
+    props.dispatch({
+      type: USER_SIGNIN_API,
+      userLogin: {
+        email,
+        password
+      }
+    });
   },
 })(Login);
 

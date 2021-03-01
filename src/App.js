@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react"
-import { Route, Router, Switch, useHistory } from "react-router-dom";
+import React from "react"
+import { Route, Router, Switch } from "react-router-dom";
 import Loading from "./components/loading/Loading";
 import Drawer from "./hocs/Drawer";
 import CreateProject from "./pages/CreateProject";
@@ -11,9 +11,9 @@ import SiderTableContent from "./pages/SiderTableContent";
 import { AwesomeBugsTemplate } from "./templates/AwesomeBugsTemplate";
 import { LoginTemplate } from "./templates/LoginTemplate";
 import history from "./util/history";
-import Signup from "./pages/Signup";
+import Register from "./pages/Register";
 
-export default function App() {
+export default function App() {  
   return (
     <>
       <Router history={history}>
@@ -24,16 +24,16 @@ export default function App() {
             LoginComponent={Login}
             SiderTableContentComponent={SiderTableContent}
           />
-          <LoginTemplate exact path="/signup" 
-            LoginComponent={Signup}
+          <LoginTemplate exact path="/register" 
+            LoginComponent={Register}
             SiderTableContentComponent={SiderTableContent}
           />
-          <AwesomeBugsTemplate exact path="/awesomebugs" Component={ProjectDetail}/>
-          <AwesomeBugsTemplate exact path="/createproject" Component={CreateProject}/>
-          <AwesomeBugsTemplate exact path="/" Component={ProjectManagement}/>
-          <AwesomeBugsTemplate exact path="/projectmanagement" Component={ProjectManagement}/>
-          <AwesomeBugsTemplate exact path="/projectdetail/:projectId" Component={ProjectDetail}/>
-          <Route path="*" component={PageNotFound} />
+            <AwesomeBugsTemplate exact path="/awesomebugs" Component={ProjectDetail}/>
+            <AwesomeBugsTemplate exact path="/createproject" Component={CreateProject}/>
+            <AwesomeBugsTemplate exact path="/" Component={ProjectManagement}/>
+            <AwesomeBugsTemplate exact path="/projectmanagement" Component={ProjectManagement}/>
+            <AwesomeBugsTemplate exact path="/projectdetail/:projectId" Component={ProjectDetail}/>
+            <Route path="*" component={PageNotFound} />
         </Switch>
       </Router>
     </>

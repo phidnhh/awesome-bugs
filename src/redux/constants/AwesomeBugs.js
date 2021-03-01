@@ -4,14 +4,18 @@ export const HIDE_LOADING = "HIDE_LOADING";
 
 // User constants
 export const USER_SIGNIN_API = "USER_SIGNIN_API";
+export const USER_SIGNUP_API = "USER_SIGNUP_API";
 export const SET_USER_LOGIN = "SET_USER_LOGIN";
-export const GET_USER_LOGIN = "GET_USER_LOGIN";
+
+export const TEST_TOKEN = "TEST_TOKEN";
+export const SET_ALREADY_lOGGED = "SET_ALREADY_lOGGED";
 
 export const GET_USER_SEARCH_API = "GET_USER_SEARCH_API";
 export const SET_USER_SEARCH = "SET_USER_SEARCH";
 
 export const GET_USER_BY_PROJECT_ID_API = "GET_USER_BY_PROJECT_ID_API";
 export const SET_USER_BY_PROJECT_ID = "SET_USER_BY_PROJECT_ID";
+
 
 // Drawer constants
 export const OPEN_DRAWER = "OPEN_DRAWER";
