@@ -18,7 +18,6 @@ export default function ProjectDetail(props) {
   }, []);
 
   const projectDetail = useSelector(state => state.ProjectReducer.projectDetail);
-  console.log("~ projectDetail", projectDetail);
 
   return (
     <div className="main">

@@ -1,9 +1,9 @@
 import { USER_LOGIN } from "../../util/constants/settingSystem";
-import { SET_USER_BY_PROJECT_ID, SET_USER_SEARCH } from "./../constants/AwesomeBugs";
+import { SET_USER_BY_PROJECT_ID, SET_USER_SEARCH, GET_USER_LOGIN, SET_USER_LOGIN } from "./../constants/AwesomeBugs";
 
 let userLogin = {};
 if(localStorage.getItem(USER_LOGIN)) {
-  userLogin = JSON.parse(localStorage.getItem(USER_LOGIN))
+  userLogin = JSON.parse(localStorage.getItem(USER_LOGIN));
 }
 
 const initialState = {
@@ -14,7 +14,7 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case USER_LOGIN: {
+    case SET_USER_LOGIN: {
       state.userLogin = action.userLogin;
     }; break;
 

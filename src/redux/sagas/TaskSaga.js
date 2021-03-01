@@ -1,7 +1,7 @@
 import { call, delay, put, select, takeLatest } from "redux-saga/effects";
 import { taskService } from "../../services/TaskService";
 import { STATUS_CODE } from "../../util/constants/settingSystem";
-import { GET_TASK_PRIORITY_API, GET_TASK_TYPE_API, SET_TASK_TYPE_LIST, SET_TASK_PRIORITY_LIST, SET_TASK_STATUS_LIST, GET_TASK_STATUS_API, CREATE_TASK_API, DISPLAY_LOADING, HIDE_LOADING, CLOSE_DRAWER, SET_TASK_DETAIL_MODAL, GET_TASK_DETAIL_MODAL_API, UPDATE_TASK_API, HANDLE_CHANGE_SAGA, UPDATE_TASK_DETAIL_MODAL, UPDATE_TASK_ASSIGNESS, REMOVE_TASK_ASSIGNEE, GET_PROJECT_DETAIL_API, UPDATE_STATUS_TASK_API } from "../constants/AwesomeBugs";
+import { GET_TASK_PRIORITY_API, GET_TASK_TYPE_API, SET_TASK_TYPE_LIST, SET_TASK_PRIORITY_LIST, SET_TASK_STATUS_LIST, GET_TASK_STATUS_API, CREATE_TASK_API, DISPLAY_LOADING, HIDE_LOADING, CLOSE_DRAWER, SET_TASK_DETAIL_MODAL, GET_TASK_DETAIL_MODAL_API, UPDATE_TASK_API, HANDLE_CHANGE_SAGA, UPDATE_TASK_DETAIL_MODAL, UPDATE_TASK_ASSIGNESS, REMOVE_TASK_ASSIGNEE, GET_PROJECT_DETAIL_API, UPDATE_STATUS_TASK_API, SET_INSERT_COMMENT_STATUS } from "../constants/AwesomeBugs";
 import { notification } from 'antd';
 
 // Get task type
@@ -90,7 +90,11 @@ function * createTaskSaga(action) {
     });
 
     if(status === STATUS_CODE.SUCCESS) {
-      yield put({ type: CLOSE_DRAWER });
+      yield put({
+        type: GET_PROJECT_DETAIL_API,
+        projectId: action.projectId
+      });
+      yield put({ type: CLOSE_DRAWER });      
       notification["success"]({
         message: "Create task successfully!"
       });
@@ -98,7 +102,7 @@ function * createTaskSaga(action) {
 
   } catch (error) {
     notification["error"]({
-      message: "Create project failed!"
+      message: "Create task failed!"
     });
     console.log("~ error", error.response?.data);
   }
@@ -246,6 +250,11 @@ function * updateTaskStatusSaga(action) {
         yield put({
           type: GET_TASK_DETAIL_MODAL_API,
           taskId: action.taskStatus.taskId
+        });
+        
+        yield put({
+          type: SET_INSERT_COMMENT_STATUS,
+          status: true
         });
       }
   } catch (error) {

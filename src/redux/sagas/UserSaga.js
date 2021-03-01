@@ -1,7 +1,7 @@
 import { call, delay, put, takeLatest } from "redux-saga/effects";
 import { userService } from "../../services/UserService";
 import { ACCESS_TOKEN, STATUS_CODE, USER_LOGIN } from "../../util/constants/settingSystem";
-import { GET_USER_BY_PROJECT_ID_API, GET_USER_SEARCH_API, SET_USER_SEARCH, USER_SIGNIN_API, SET_USER_BY_PROJECT_ID } from "../constants/AwesomeBugs";
+import { GET_USER_BY_PROJECT_ID_API, GET_USER_SEARCH_API, SET_USER_SEARCH, USER_SIGNIN_API, SET_USER_BY_PROJECT_ID, SET_USER_LOGIN } from "../constants/AwesomeBugs";
 import { DISPLAY_LOADING, HIDE_LOADING } from "../constants/AwesomeBugs";
 import history from "./../../util/history";
 import { notification } from 'antd';
@@ -23,10 +23,10 @@ function * signinSaga(action) {
       localStorage.setItem(USER_LOGIN, JSON.stringify(data.content));
 
       yield put({
-        type: USER_LOGIN,
+        type: SET_USER_LOGIN,
         userLogin: data.content
       })
-            
+
       history.push("/awesomebugs");
 
       notification["success"]({

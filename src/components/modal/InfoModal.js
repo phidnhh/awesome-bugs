@@ -2,10 +2,10 @@ import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux';
 import parse from "html-react-parser";
 import { Select, Avatar, Card, Button } from 'antd';
-import avatar1 from "./../../assets/avatar/avatar1.jfif";
-import { GET_TASK_PRIORITY_API, GET_TASK_STATUS_API, GET_TASK_TYPE_API, UPDATE_TASK_ASSIGNESS, UPDATE_TASK_DETAIL_MODAL, REMOVE_TASK_ASSIGNEE, HANDLE_CHANGE_SAGA } from '../../redux/constants/AwesomeBugs';
+import { GET_TASK_PRIORITY_API, GET_TASK_STATUS_API, GET_TASK_TYPE_API, UPDATE_TASK_ASSIGNESS, UPDATE_TASK_DETAIL_MODAL, REMOVE_TASK_ASSIGNEE, HANDLE_CHANGE_SAGA, GET_USER_LOGIN, INSERT_COMMENT_API, DELETE_COMMENT_API } from '../../redux/constants/AwesomeBugs';
 import { Editor } from '@tinymce/tinymce-react';
 import _ from "lodash";
+import { notification } from 'antd';
 
 const { Option } = Select;
 const { Meta } = Card;
@@ -20,6 +20,7 @@ export default function InfoModal() {
 
   const { taskDetailModal, taskStatusList, taskPriorityList, taskTypeList } = useSelector(state => state.TaskReducer);
   const projectDetail = useSelector(state => state.ProjectReducer.projectDetail);
+  const userLogin = useSelector(state => state.UserReducer.userLogin);
 
   const [stateEditor, setStateEditor] = useState({
     visible: false,
@@ -27,8 +28,7 @@ export default function InfoModal() {
     content: taskDetailModal.description
   });
 
-
-    useEffect(() => {
+  useEffect(() => {
     setStateEditor({
       ...stateEditor,
       historyContent: taskDetailModal.description,
@@ -36,7 +36,22 @@ export default function InfoModal() {
     });
   }, [taskDetailModal]);
 
-
+  const [stateComment, setStateComment] = useState({
+    visible: false,
+    content: ""
+  });
+  
+  let { insertComment } = useSelector(state => state.CommentReducer);
+  useEffect(() => {
+    if(insertComment.status) {
+      setStateComment({
+        ...stateComment,
+        visible: false,
+        content: ""
+      });
+    }
+  }, [insertComment.status]);
+  
   let handleChange = (name, value) => {
     dispatch({
       type: HANDLE_CHANGE_SAGA,
@@ -115,7 +130,7 @@ export default function InfoModal() {
   }
 
   return (
-      <div className="modal fade" id="infoModal" tabIndex={-1} role="dialog" aria-labelledby="infoModal" aria-hidden="true">
+    <div className="modal fade" id="infoModal" tabIndex={-1} role="dialog" aria-labelledby="infoModal" aria-hidden="true">
       <div className="modal-dialog modal-info">
         <div className="modal-content">
           <div className="modal-header">
@@ -147,19 +162,22 @@ export default function InfoModal() {
               </Select>              
               
             </div>
-            <div style={{display: 'flex'}} className="task-click">
+            <div className="task-modal-click">
               <div>
-                <i className="fab fa-telegram-plane" />
-                <span style={{paddingRight: 20}}>Give feedback</span>
+                <i className="fa fa-link me-2" />
+                <span>Copy link</span>
               </div>
-              <div>
-                <i className="fa fa-link" />
-                <span style={{paddingRight: 20}}>Copy link</span>
+              <div className="ms-4 me-4" onClick={() => {
+
+              }}>
+                <i className="fa fa-trash-alt" style={{cursor: 'pointer'}} />
               </div>
-              <i className="fa fa-trash-alt" style={{cursor: 'pointer'}} />
-              <button type="button" className="close" data-bs-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">×</span>
-              </button>
+              <div data-bs-dismiss="modal">
+                <i className="fa fa-times"></i>
+              </div>
+              {/* <span data-bs-dismiss="modal" aria-label="Close">
+                <i className="fa fa-times"></i>
+              </span> */}
             </div>
           </div>
           <div className="modal-body">
@@ -222,45 +240,99 @@ export default function InfoModal() {
                     </div>
                   </div>
                   <div className="comment mt-3">
-                    <h6>Comment</h6>
-                    <div className="block-comment" style={{display: 'flex'}}>
-                      <div className="avatar">
-                        <img src={avatar1} alt="avatar" />
+                    <b>Comment</b>
+                    <div className="block-comment mt-1 mb-4" style={{display: 'flex'}}>
+                      <div className="div-avatar">
+                        <Avatar size={32} src={`${userLogin.avatar}&background=random&color=random`} />
                       </div>
-                      <div className="input-comment">
-                        <input type="text" placeholder="Add a comment ..." />
-                        <p>
-                          <span style={{fontWeight: 500, color: 'gray'}}>Protip:</span>
-                          <span>press
-                            <span style={{fontWeight: 'bold', background: '#ecedf0', color: '#b4bac6'}}>M</span>
-                            to comment</span>
-                        </p>
+                      <div className="input-comment ms-4">
+                        <input name="comment" type="text" placeholder="Add a comment ..."
+                          id="input-task-modal-comment"
+                          value={stateComment.content? stateComment.content: ""}
+                          onClick={() => {
+                            setStateComment({
+                              ...stateComment,
+                              visible: true
+                            });
+                          }}
+                          onChange={(e) => {
+                            setStateComment({
+                              ...stateComment,
+                              content: e.target.value
+                            });
+                          }}
+                        ></input>
+                        {
+                          stateComment.visible?
+                            <div className="mt-3">
+                              <Button type="primary" className="me-2"
+                                onClick={() => {
+                                  dispatch({
+                                    type: INSERT_COMMENT_API,
+                                    newComment: {
+                                      taskId: taskDetailModal.taskId,
+                                      contentComment: stateComment.content
+                                    },
+                                    projectId: taskDetailModal.projectId,
+                                    taskId: taskDetailModal.taskId
+                                  });
+                                  setStateComment({
+                                    ...stateComment,
+                                    content: "",
+                                    visible: false
+                                  });
+                                }}
+                              >Save</Button>
+                              <Button onClick={() => {
+                                setStateComment({
+                                  ...stateComment,
+                                  content: "",
+                                  visible: false
+                                });
+                              }}>Cancel</Button>
+                            </div>:
+                            <div></div>
+                        }
                       </div>
                     </div>
                     <div className="lastest-comment">
-                      <div className="comment-item">
-                        <div className="display-comment" style={{display: 'flex'}}>
-                          <div className="avatar">
-                            <img src={avatar1} alt="avatar" />
-                          </div>
-                          <div>
-                            <p style={{marginBottom: 5}}>
-                              Lord Gaben <span>a month ago</span>
-                            </p>
-                            <p style={{marginBottom: 5}}>
-                              Lorem ipsum dolor sit amet, consectetur
-                              adipisicing elit. Repellendus tempora ex
-                              voluptatum saepe ab officiis alias totam ad
-                              accusamus molestiae?
-                            </p>
-                            <div>
-                              <span style={{color: '#929398'}}>Edit</span>
-                              •
-                              <span style={{color: '#929398'}}>Delete</span>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
+                      {
+                        taskDetailModal.lstComment?.map(item => item)
+                          .reverse().map((comment, index) => {
+                            return (
+                              <div key={index} className="comment-item mb-4">
+                                <div className="display-comment" style={{display: 'flex'}}>
+                                  <Avatar src={`${comment?.avatar}&background=random&color=random`} />
+                                  <div className="ms-4">
+                                    <p>{comment?.name}</p>
+                                    <div>
+                                      {
+                                        comment.commentContent? parse(comment?.commentContent): ""
+                                      }
+                                    </div>
+                                    {
+                                      userLogin.id === comment.idUser?
+                                        <div className="action-comment">
+                                          {/* <span>Edit</span> */}
+                                          <span onClick={
+                                            () => {
+                                              dispatch({
+                                                type: DELETE_COMMENT_API,
+                                                taskId: taskDetailModal.taskId,
+                                                projectId: taskDetailModal.projectId,
+                                                idComment: comment.id
+                                              });
+                                            }
+                                          }>Delete</span>
+                                        </div>:
+                                        <div className="action-comment"></div>
+                                    }
+                                  </div>
+                                </div>
+                              </div>                            
+                            )
+                          })
+                      }
                     </div>
                   </div>
                 </div>
@@ -287,7 +359,7 @@ export default function InfoModal() {
                       {
                         taskDetailModal.assigness?.map((user, index) => {
                           return <Card key={index} 
-                            className={ user.name.length<5? "card-assignees col-3": "card-assignees col-5" }
+                            className={ user.name.length<5? "card-assignees col-4": "card-assignees col-5" }
                             onClick={() => {
                               dispatch({
                                 type: HANDLE_CHANGE_SAGA,

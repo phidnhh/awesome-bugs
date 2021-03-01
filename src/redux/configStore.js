@@ -6,6 +6,7 @@ import UserReducer from "./reducers/UserReducer";
 import ProjectReducer from "./reducers/ProjectReducer";
 import DrawerReducer from "./reducers/DrawerReducer";
 import TaskReducer from "./reducers/TaskReducer";
+import CommentReducer from "./reducers/CommentReducer";
 
 //setup saga
 const sagaMiddleware = createSagaMiddleware();
@@ -14,7 +15,8 @@ const rootReducer = combineReducers({
     UserReducer,
     ProjectReducer,
     DrawerReducer,
-    TaskReducer
+    TaskReducer,
+    CommentReducer
 });
 
 const store = createStore(

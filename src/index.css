@@ -520,13 +520,6 @@
   padding: 10px;
 }
 
-.block-comment .avatar {
-  margin-right: 15px;
-}
-
-.display-comment .avatar {
-  margin-right: 15px;
-}
 
 .col-4 h6 {
   font-size: 13px;
@@ -713,4 +706,57 @@ a.awesomebugs-menu-item.activeNavlink {
 
 .dropdown-add-more-assignees {
   min-width: 200px!important;
+}
+
+#infoModal {
+  font-family: CircularMedium;
+}
+
+.lastest-comment .comment-item p {
+  margin: 0;
+}
+
+.lastest-comment .action-comment span {
+  margin-right: 12px;
+  display: inline-block;
+  padding: 2px 0px;
+  color: rgb(94, 108, 132);
+  font-size: 14.5px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.lastest-comment .action-comment span:hover {
+  text-decoration: underline;
+}
+
+.div-avatar img {
+  width: 32px;
+  height: 32px;
+}
+
+.ant-notification {
+  z-index: 99999!important;
+}
+
+.task-modal-click {
+  display: flex;
+}
+
+.task-modal-click div {
+  cursor: pointer;
+  padding: 5px 10px;
+  text-align: center;
+}
+
+.task-modal-click div:hover {
+  background: rgb(235, 236, 240);
+}
+
+.form-signup .ant-form-item {
+  margin-bottom: 15px;
+}
+
+.form-signup .navlink-login:hover {
+  text-decoration: underline;
 }
