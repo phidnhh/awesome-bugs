@@ -26,7 +26,7 @@ export default function Content(props) {
   }
   
   const handleDragEnd = (result) => {
-    console.log("~ result", result);
+    // console.log("~ result", result);
     let { destination, source } = result;
     if(!destination) {
       return;

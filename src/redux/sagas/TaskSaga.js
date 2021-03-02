@@ -78,7 +78,7 @@ export function * watchGetTaskStatusSaga() {
 
 // Create task
 function * createTaskSaga(action) {
-  console.log("~ action", action);
+  // console.log("~ action", action);
   yield put({
     type: DISPLAY_LOADING
   });
@@ -202,10 +202,10 @@ function * handleChangeSaga(action) {
 
   // step 02: call api after update taskDetailModal in reducer
   let taskDetailModal = yield select(state => state.TaskReducer.taskDetailModal);
-  console.log("~ taskDetailModal Saga", taskDetailModal);
+  // console.log("~ taskDetailModal Saga", taskDetailModal);
 
   let listUserAsign = taskDetailModal.assigness?.map((item, index) => item.id);
-  console.log("~ listUserAsign", listUserAsign);
+  // console.log("~ listUserAsign", listUserAsign);
   
   let taskUpdate = {
     listUserAsign: [...listUserAsign],
@@ -221,7 +221,7 @@ function * handleChangeSaga(action) {
     priorityId: taskDetailModal.priorityId
   };
 
-  console.log("~ taskUpdate", taskUpdate);
+  // console.log("~ taskUpdate", taskUpdate);
   yield put({
     type: UPDATE_TASK_API,
     taskUpdate: taskUpdate
