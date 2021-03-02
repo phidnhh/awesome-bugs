@@ -28,11 +28,11 @@ function * signinSaga(action) {
         userLogin: data.content,
       })
 
-      history.push("/awesomebugs");
+      history.push("/");
 
       notification["success"]({
         message: "Login successfully!",
-        description: `Hello ${data.content.name}! Have a lucky day with awesome bugs.`
+        description: `Hello ${data.content.name}! Have a lucky day with Awesome Bugs.`
       });
     }
 
