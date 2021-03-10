@@ -7,10 +7,13 @@ import FormCreateTask from '../form/FormCreateTask';
 import history from "./../../util/history";
 import { ACCESS_TOKEN, USER_LOGIN } from '../../util/constants/settingSystem';
 import { notification } from 'antd';
+import { useAuth } from '../../context/auth';
 
 const { Sider } = Layout;
 
 export default function Sidebar() {
+  const { setLoggedIn } = useAuth();
+
   const dispatch = useDispatch();
 
   const [state, setState] = useState({
@@ -44,7 +47,7 @@ export default function Sidebar() {
             <Menu.Item key="2" icon={<i className="fa fa-sign-out-alt fa-lg" ></i>} onClick={() => {
               localStorage.removeItem(ACCESS_TOKEN);
               localStorage.removeItem(USER_LOGIN);
-              history.push("/login");
+              setLoggedIn(false);
             }}>
               <span className="text-uppercase">Sign out</span>
             </Menu.Item>

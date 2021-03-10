@@ -1,7 +1,7 @@
 export const DOMAIN_AWESOMEBUGS = "http://casestudy.cyberlearn.vn/api";
 
-export const ACCESS_TOKEN = "access_token";
-export const USER_LOGIN = "user_login";
+export const ACCESS_TOKEN = "awesome_bugs_token";
+export const USER_LOGIN = "awesome_bugs_user";
 
 export const STATUS_CODE = {
   SUCCESS: 200,

@@ -1,5 +1,5 @@
 import React from 'react'
-import { UserOutlined, LockOutlined } from "@ant-design/icons";
+import { UserOutlined, LockOutlined, PhoneOutlined, MailOutlined } from "@ant-design/icons";
 import { Input, Button, Form } from "antd";
 import { withFormik } from 'formik';
 import * as yup from "yup";
@@ -38,7 +38,7 @@ function Register(props) {
           <h3 style={{ fontSize: 25 }} className="text-center display-4">Đăng ký tài khoản</h3>
           <hr className=""/>
           <Form.Item>
-            <Input onChange={handleChange} onBlur={handleBlur} name="email" prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Email" />
+            <Input onChange={handleChange} onBlur={handleBlur} name="email" prefix={<MailOutlined className="site-form-item-icon" />} placeholder="Email" />
             {touched.email? <div className="text-danger ms-3">{errors.email}</div>: ""}
           </Form.Item>          
           <Form.Item>
@@ -47,12 +47,12 @@ function Register(props) {
             {touched.password? <div className="text-danger ms-3">{errors.password}</div>: ""}
           </Form.Item>
           <Form.Item>
-            <Input onChange={handleChange} onBlur={handleBlur} prefix={<LockOutlined className="site-form-item-icon" />} name="phoneNumber" type="phoneNumber" placeholder="Phone number"
+            <Input onChange={handleChange} onBlur={handleBlur} prefix={<PhoneOutlined className="site-form-item-icon" />} name="phoneNumber" type="phoneNumber" placeholder="Phone number"
             />
             {touched.phoneNumber? <div className="text-danger ms-3">{errors.phoneNumber}</div>: ""}
           </Form.Item>
           <Form.Item>
-            <Input onChange={handleChange} onBlur={handleBlur} prefix={<LockOutlined className="site-form-item-icon" />} name="name" type="name" placeholder="Name"
+            <Input onChange={handleChange} onBlur={handleBlur} prefix={<UserOutlined className="site-form-item-icon" />} name="name" type="name" placeholder="Name"
             />
             {touched.name? <div className="text-danger ms-3">{errors.name}</div>: ""}
           </Form.Item>
@@ -72,9 +72,9 @@ function Register(props) {
             <div className="line r"></div>
           </div>
           <Form.Item className="text-center icons-list">
-            <Button style={{ backgroundColor: "#4267B2" }} type="primary" shape="circle" size="large" icon={<i className="fab fa-facebook-f"/>} />
+            <Button style={{ backgroundColor: "#4267B2", cursor:"not-allowed" }} type="primary" shape="circle" size="large" icon={<i className="fab fa-facebook-f"/>} />
             &nbsp;&nbsp;
-            <Button className="btn btn-social-icon btn-facebook" type="danger" shape="circle" size="large" icon={<i className="fab fa-google"/>} />
+            <Button style={{cursor:"not-allowed"}} className="btn btn-social-icon btn-facebook" type="danger" shape="circle" size="large" icon={<i className="fab fa-google"/>} />
           </Form.Item>
         </form>
       </div>

@@ -8,23 +8,26 @@ import { USER_SIGNIN_API } from '../redux/constants/AwesomeBugs';
 import history from "./../util/history";
 import { USER_LOGIN } from '../util/constants/settingSystem';
 import { notification } from 'antd';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Redirect } from 'react-router-dom';
+import { userService } from "./../services/UserService";
+import { useAuth } from '../context/auth';
 
 function Login(props) { 
-  let userLogin = {};
-  if(localStorage.getItem(USER_LOGIN)) {
-    userLogin = JSON.parse(localStorage.getItem(USER_LOGIN));
-  }
-  
+  const { isLoggedIn, setLoggedIn } = useAuth();
   useEffect(() => {
-    if(userLogin.id) {
-      history.push("/");
-      notification["warning"]({
-        message: "You are already logged in, you need to log out before logging in as different user.",
-      });
-    }
+    userService.testToken().catch((err) => {
+      if(err.response.data.statusCode == 500) {
+        setLoggedIn(true);
+      } else {
+        setLoggedIn(false);
+      }
+    });
   }, []);
-  
+
+  if (isLoggedIn) {
+    return <Redirect to="/" />;
+  }
+
   const {
     values,
     touched,
@@ -64,9 +67,9 @@ function Login(props) {
             <div className="line r"></div>
           </div>
           <Form.Item className="text-center icons-list">
-            <Button style={{ backgroundColor: "#4267B2" }} type="primary" shape="circle" size="large" icon={<i className="fab fa-facebook-f"/>} />
+            <Button style={{ backgroundColor: "#4267B2", cursor: "not-allowed" }} type="primary" shape="circle" size="large" icon={<i className="fab fa-facebook-f"/>} />
             &nbsp;&nbsp;
-            <Button className="btn btn-social-icon btn-facebook" type="danger" shape="circle" size="large" icon={<i className="fab fa-google"/>} />
+            <Button style={{cursor: "not-allowed"}} className="btn btn-social-icon btn-facebook" type="danger" shape="circle" size="large" icon={<i className="fab fa-google"/>} />
           </Form.Item>
         </form>
       </div>
