@@ -85,6 +85,26 @@
   transform: translateY(-50%);
 }
 
+/* Tablet */
+@media (min-width: 379px) and (max-width: 1023px) {
+  .ant-layout-sider {
+    display: none;
+  }
+}
+
+/* Mobile */
+@media (max-device-width: 480px) {
+  .ant-layout-sider {
+    display: none;
+  }
+  .form-login h3 {
+    font-size: 18px!important;
+  }
+  .form-login .w-50 {
+    width: 70%!important;
+  }
+}
+
 .awesomebugs-loading {
   background-color: rgba(255, 255, 255, 0.8);
   position: fixed;
